@@ -22,6 +22,16 @@
       <version>5.8.2</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>es.FlatFLat-3.3</groupId>
+      <artifactId>FlatFlat</artifactId>
+      <version>3.3</version>
+    </dependency>
+    <dependency>
+      <groupId>es.flatflat.intellijtheme.library</groupId>
+      <artifactId>FlatFlatIntellijtheme</artifactId>
+      <version>3.3</version>
+    </dependency>
   </dependencies>
 
   <build>
