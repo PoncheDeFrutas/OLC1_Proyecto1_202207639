@@ -23,7 +23,7 @@ import com.Classes.TokenConstant;
 
 %type Token
 %eofval{
-    return new Token(tokens.size(),yyline, yycolumn, null,null,TokenConstant.EOF);
+    return new Token(tokens.size(),-1, -1, null,null,TokenConstant.EOF);
 %eofval}
 
 JUMP = [\n]
@@ -40,6 +40,8 @@ QUOT = "\"" | "&quot;"
 LQUOT = "\“" | "&ldquo;"
 RQUOT =  "\”"| "&rdquo;"
 
+
+/*EXPRESIONES REGULARES*/
 ARRAY = {AT}{IDENTIFIER}
 STRING = ({QUOT}|{LQUOT}) ~({QUOT}|{RQUOT})
 DOUBLE = {DIGIT}+({DOT}{DIGIT}+)?
@@ -86,107 +88,77 @@ MULTI_COMMENT = {SMALLER}{EXCLAMATION}( . | {JUMP})*{EXCLAMATION}{GREATHER}
 
 
 /*PALABRAS RESERVADAS*/
-"PROGRAM" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"PROGRAM",TokenConstant.PROGRAM));
+"PROGRAM" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"PROGRAM",TokenConstant.PROGRAM));
     return tokens.get(tokens.size()-1);}
 
-"END PROGRAM" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"END",TokenConstant.ENDPROGRAM));
+"END" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"END",TokenConstant.END));
     return tokens.get(tokens.size()-1);}
 
-"END" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"END",TokenConstant.END));
+"END PROGRAM" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"END PROGRAM",TokenConstant.ENDPROGRAM));
     return tokens.get(tokens.size()-1);}
 
-"CHAR[]" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"CHAR[]",TokenConstant.CHAR));
+"VAR" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"VAR",TokenConstant.VAR));
     return tokens.get(tokens.size()-1);}
 
-"DOUBLE" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"DOUBLE",TokenConstant.DOUBLE));
+"ARR" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"ARR",TokenConstant.ARR));
     return tokens.get(tokens.size()-1);}
 
-"VAR" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"VAR",TokenConstant.VAR));
-    return tokens.get(tokens.size()-1);}
-
-"ARR" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"ARR",TokenConstant.ARR));
+/*TIPOS DE DATOS*/
+"CHAR[]" | "DOUBLE" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"",TokenConstant.DATATYPE));
     return tokens.get(tokens.size()-1);}
 
 /*OPERACIONES ARITMETICAS*/
-"SUM" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"SUM",TokenConstant.SUM));
-    return tokens.get(tokens.size()-1);}
-
-"RES" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"RES",TokenConstant.RES));
-    return tokens.get(tokens.size()-1);}
-
-"MUL" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"MUL",TokenConstant.MUL));
-    return tokens.get(tokens.size()-1);}
-
-"DIV" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"DIV",TokenConstant.DIV));
-    return tokens.get(tokens.size()-1);}
-
-"MOD" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"MOD",TokenConstant.MOD));
+"SUM" | "RES" | "MUL" | "DIV" | "MOD" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"",TokenConstant.ARITFUNC));
     return tokens.get(tokens.size()-1);}
 
 /*OPERACIONES ESTADISTICAS*/
-"MEDIA" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"MEDIA",TokenConstant.MEDIA));
-    return tokens.get(tokens.size()-1);}
-
-"MEDIANA" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"MEDIANA",TokenConstant.MEDIANA));
-    return tokens.get(tokens.size()-1);}
-
-"MODA" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"MODA",TokenConstant.MODA));
-    return tokens.get(tokens.size()-1);}
-
-"VARIANZA" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"VARIANZA",TokenConstant.VARIANZA));
-    return tokens.get(tokens.size()-1);}
-
-"MAX" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"MAX",TokenConstant.MAX));
-    return tokens.get(tokens.size()-1);}
-
-"MIN" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"MIN",TokenConstant.MIN));
+"MEDIA" | "MEDIANA" | "MODA" | "VARIANZA" | "MAX" | "MIN" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"",TokenConstant.ESTFUNC));
     return tokens.get(tokens.size()-1);}
 
 /*IMPRESION DE EXPRESIONES*/
-"CONSOLE" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"CONSOLE",TokenConstant.CONSOLE));
+"CONSOLE" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"CONSOLE",TokenConstant.CONSOLE));
     return tokens.get(tokens.size()-1);}
 
-"PRINT" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"PRINT",TokenConstant.PRINT));
+"PRINT" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"PRINT",TokenConstant.PRINT));
     return tokens.get(tokens.size()-1);}
 
-"COLUMN" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"COLUMN",TokenConstant.COLUMN));
+"COLUMN" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"COLUMN",TokenConstant.COLUMN));
     return tokens.get(tokens.size()-1);}
 
 /*FUNCIONES DE GRAFICACION*/
-"GRAPHBAR" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"GRAPHBAR",TokenConstant.GRAPHBAR));
+"GRAPHBAR" | "GRAPHLINE" | "GRAPHPIE" | "HISTOGRAM" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"GRAPHBAR",TokenConstant.GRAPHTYPE));
     return tokens.get(tokens.size()-1);}
 
-"GRAPHPIE" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"GRAPHPIE",TokenConstant.GRAPHPIE));
+"TITULO" | "TITULOX" | "TITULOY" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"TITULO",TokenConstant.TITLE));
     return tokens.get(tokens.size()-1);}
 
-"GRAPHLINE" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"GRAPHLINE",TokenConstant.GRAPHLINE));
+"EJEX" | "EJEY" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"EJES",TokenConstant.EJES));
     return tokens.get(tokens.size()-1);}
 
-"HISTOGRAM" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"HISTOGRAM",TokenConstant.HISTOGRAM));
+"VALUES" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"VALUES",TokenConstant.VALUES));
     return tokens.get(tokens.size()-1);}
 
-"TITULO" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"TITULO",TokenConstant.TITULO));
+"LABEL" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"LABEL",TokenConstant.LABEL));
     return tokens.get(tokens.size()-1);}
 
-"EJEX" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"EJEX",TokenConstant.EJEX));
-    return tokens.get(tokens.size()-1);}
-
-"EJEY" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"EJEY",TokenConstant.EJEY));
-    return tokens.get(tokens.size()-1);}
-
-"TITULOX" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"TITULOX",TokenConstant.TITULOX));
-    return tokens.get(tokens.size()-1);}
-
-"TITULOY" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"TITULOY",TokenConstant.TITULOY));
-    return tokens.get(tokens.size()-1);}
-
-"VALUES" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"VALUES",TokenConstant.VALUES));
-    return tokens.get(tokens.size()-1);}
-
-"LABEL" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"LABEL",TokenConstant.LABEL));
-    return tokens.get(tokens.size()-1);}
-
-"EXEC" {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"EXEC",TokenConstant.EXEC));
+"EXEC" {
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"EXEC",TokenConstant.EXEC));
     return tokens.get(tokens.size()-1);}
 
 
@@ -208,7 +180,7 @@ MULTI_COMMENT = {SMALLER}{EXCLAMATION}( . | {JUMP})*{EXCLAMATION}{GREATHER}
     return tokens.get(tokens.size()-1);}
 
 <YYINITIAL>{STRING} {
-    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"\".*\"",TokenConstant.STRING));
+    tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext().replaceAll("[\"“”]", ""),"\".*\"",TokenConstant.STRING));
     return tokens.get(tokens.size()-1);}
 
 <YYINITIAL>{ARRAY} {

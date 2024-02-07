@@ -1,4 +1,4 @@
-package com.Ponche;
+package com.GUI;
 
 
 
@@ -24,43 +24,32 @@ public class AppTest
     @Test
     public void testLexemeAnalyzer() throws IOException{
         String testString = """
-                &
                 PROGRAM
                 END PROGRAM
-                ! This is a comment
-                <!-- 
-                This is a comment 
-                --!>
+                ! Esto es un comentario de una sola línea
+                <! Esto es un comentario
+                Multilínea !>
                 var:double:: numero <- 2.5 end;
                 var:char[]::cadena <- “cadena” end;
-                
-                arr:double::@darray <- [1, 2, 3, 4, 5] end; ! Arreglo de tipo double
+                arr:double::@darray <- [1, 2, 3, 4, 5] end;
                 arr:char[]::@carray <- [“12”, “2”, “3”] end;
                 
-                var:double:: suma <- SUM(5, 2) end;
-                var:double:: resta <- RES(3, 2) end;
-                var:double:: multi <- MUL(4, numero) end; ! Funciona con variables
-                var:double:: division <- DIV(1, variable) end;
-                var:double:: modulo <- MOD(5, 4) end;
+                SUM(5, 2)
+                RES(3, 2)
+                MUL(4, numero)
+                DIV(1, variable)
+                MOD(5, 4)
                 
-                var:double:: med1 <- Media([1, 2, SUM(3, b), 4, a]) end;
-                var:double:: med2 <- Mediana( @arreglo ) end;
-                arr:double::@arreglo <- [Media(@data), Mediana(@data)] end;
                 
-                onsole::print = “hola”, numero, 15, “adios” end;
-                ! Salida: hola, 15, adios
+                Media(ARREGLO_DOUBLE)
+                Mediana(ARREGLO_DOUBLE)
+                Moda(ARREGLO_DOUBLE)
+                Varianza(ARREGLO_DOUBLE)
+                Max(ARREGLO_DOUBLE)
+                Min(ARREGLO_DOUBLE)
                 
+                console::print = “hola”, numero, 15, “adios” end;
                 console::column = “Enteros” -> @darray end;
-                console::column = titulo -> [1, 2, 3, 4, 5] end;
-                
-                GraphPie(
-                titulo::char[] = “Titulo inicial” end;
-                label::char[] = [“dato incorrecto”, “dato2” ] end;
-                values::double = [20, 70] end;
-                titulo::char[] = “Titulo que se debe mostrar” end;
-                label::char[] = [“dato correcto”, “dato2” ] end;
-                EXEC grapPie end;
-                ) end;
                 
                 graphBar(
                 titulo::char[] = “Estudiantes” end;
@@ -72,9 +61,9 @@ public class AppTest
                 ) end;
                 
                 graphPie(
-                label::char[] = [“Uno”, “Dos”, “Tres”] end;
-                values::double = [50, 30, 20] end;
-                titulo::char[] = “Ejemplo Gráfica de Pie” end;
+                label::char[] = ARREGLOCADENA end;
+                values::double = ARREGLODOUBLE end;
+                titulo::char[] = Cadena end;
                 EXEC grapPie end;
                 ) end;
                 
@@ -92,10 +81,6 @@ public class AppTest
                 values::char[] = [2,2,2,5,5,7,8] end;
                 EXEC Histogram end;
                 ) end;
-                
-                
-                
-                
                 """;
         Reader stringReader = new StringReader(testString.toUpperCase());
         LexemeAnalyzer lexemeAnalyzer = new LexemeAnalyzer(stringReader);
