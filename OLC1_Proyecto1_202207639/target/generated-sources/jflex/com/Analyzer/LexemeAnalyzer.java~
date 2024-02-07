@@ -6,7 +6,7 @@ package com.Analyzer;
 
 import java.io.*;
 import java.util.ArrayList;
-import com.Classes.Token;
+import com.Classes.Error;import com.Classes.Token;
 import com.Classes.TokenConstant;
 
 
@@ -431,6 +431,7 @@ public class LexemeAnalyzer {
 
   /* user code: */
     public ArrayList<Token> tokens = new ArrayList<Token>();
+    public ArrayList<Error> errors = new ArrayList<Error>();
     StringBuffer buffer = new StringBuffer();
 
 
@@ -703,7 +704,7 @@ public class LexemeAnalyzer {
    * @return the next token.
    * @exception java.io.IOException if any I/O-Error occurs.
    */
-  public Token next_token() throws java.io.IOException
+  public Error next_token() throws java.io.IOException
   {
     int zzInput;
     int zzAction;
@@ -840,14 +841,14 @@ public class LexemeAnalyzer {
 
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
-          {     return new Token(tokens.size(),-1, -1, null,null,TokenConstant.EOF);
+          {     return new Error(errors.size(),-1, -1, null,null,"");
  }
       }
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"",TokenConstant.ERROR));
-    return tokens.get(tokens.size()-1);
+            { errors.add(new Error(tokens.size(),yyline, yycolumn, yytext(),"Lexeme", "Lexema " + "yytext()" + " no reconocido."));
+    return errors.get(errors.size()-1);
             }
           // fall through
           case 36: break;
@@ -923,7 +924,7 @@ public class LexemeAnalyzer {
           // fall through
           case 48: break;
           case 14:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext().replace('"', ' '),"\".*\"",TokenConstant.STRING));
+            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext().replaceAll("[\"“”]", ""),"\".*\"",TokenConstant.STRING));
     return tokens.get(tokens.size()-1);
             }
           // fall through
