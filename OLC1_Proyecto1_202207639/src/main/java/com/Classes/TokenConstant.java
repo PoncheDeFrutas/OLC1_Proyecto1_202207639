@@ -1,0 +1,40 @@
+package com.Classes;
+
+public enum TokenConstant {
+    EQUAL,
+    LPAREN,
+    RPAREN,
+    LBRACKET,
+    RBRACKET,
+    COMMA,
+    SEMICOLON,
+    COLON,
+    DOUBLECOLON,
+    LARROW,
+    RARROW,
+    PROGRAM,
+    ENDPROGRAM,
+    END,
+    VAR,
+    ARR,
+    DATATYPE,
+    ARITFUNC,
+    ESTFUNC,
+    CONSOLE,
+    PRINT,
+    COLUMN,
+    GRAPHTYPE,
+    TITLE,
+    EJES,
+    VALUES,
+    LABEL,
+    EXEC,
+    ID,
+    NUM,
+    STRING,
+    ARRAY,
+    ERROR,
+    EOF
+
+
+}

@@ -1,0 +1,18 @@
+package com.Analyzer;
+
+import java_cup.runtime.*;
+
+class Parser;
+
+terminal EQUAL, LPAREN, RPAREN, LBRACKET, RBRACKET, COMMA, SEMICOLON, COLON, DOUBLECOLON,
+LARROW, RARROW, PROGRAM, END, VAR, ARR, DATATYPE, ARITFUNC, ESTFUNC, CONSOLE, PRINT, COLUMN,
+GRAPHTYPE, TITLE, EJES, VALUES, LABEL, EXEC, ID, NUM, STRING, ARRAY, ERROR;
+
+nonterminal start_program, statements, ;
+
+start with start_program;
+
+start_program::= PROGRAM statements END PROGRAM
+    ;
+
+statements::=
