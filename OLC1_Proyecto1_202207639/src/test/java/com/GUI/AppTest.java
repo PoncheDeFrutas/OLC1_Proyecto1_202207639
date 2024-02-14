@@ -3,6 +3,8 @@ package com.GUI;
 
 
 import com.Analyzer.LexemeAnalyzer;
+import com.Analyzer.Parser;
+import com.Analyzer.flexcup;
 import com.Classes.Token;
 import com.Classes.TokenConstant;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,8 @@ public class AppTest
     @Test
     public void testLexemeAnalyzer() throws IOException{
         String testString = """
+                00000003
+                30
                 PROGRAM
                 END PROGRAM
                 ! Esto es un comentario de una sola línea
@@ -95,5 +99,15 @@ public class AppTest
 
             token = lexemeAnalyzer.next_token();
         }
+    }
+
+    @Test
+    public void testSintacticAnalyzer() throws Exception {
+        String testString = "=";
+        Reader stringReader = new StringReader(testString.toUpperCase());
+        flexcup flexcup = new flexcup(stringReader);
+        Parser parser = new Parser(flexcup);
+        parser.parse();
+        System.out.println("Sintactic Analyzer test passed");
     }
 }
