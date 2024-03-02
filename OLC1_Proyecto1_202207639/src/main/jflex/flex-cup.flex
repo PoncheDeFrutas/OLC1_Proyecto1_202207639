@@ -50,7 +50,7 @@ RQUOT =  "\”"| "&rdquo;"
 /*EXPRESIONES REGULARES*/
 ARRAY = {AT}{IDENTIFIER}
 STRING = ({QUOT}|{LQUOT}) ~({QUOT}|{RQUOT})
-DOUBLE = ( 0 |[1-9]({DOT}{DIGIT}+)?)
+DOUBLE = ( 0 |[1-9]+ 0*)({DOT}{DIGIT}+)?
 IDENTIFIER = {LETTER}({LETTER}|{DIGIT})*
 SIMPLE_COMMENT = {EXCLAMATION} .* {JUMP}
 MULTI_COMMENT = {SMALLER}{EXCLAMATION}( . | {JUMP})*{EXCLAMATION}{GREATHER}
@@ -114,7 +114,7 @@ MULTI_COMMENT = {SMALLER}{EXCLAMATION}( . | {JUMP})*{EXCLAMATION}{GREATHER}
     tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"VAR",TokenConstant.VAR));
     return symbol (ParserSym.VAR, yytext());}
 
-<YYINITIAL>"ARRAY" {
+<YYINITIAL>"ARR" {
     tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"ARRAY",TokenConstant.ARR));
     return symbol (ParserSym.ARR, yytext());}
 
@@ -191,9 +191,9 @@ MULTI_COMMENT = {SMALLER}{EXCLAMATION}( . | {JUMP})*{EXCLAMATION}{GREATHER}
     tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext().replaceAll("[\"“”]", ""),"\".*\"",TokenConstant.STRING));
     return symbol (ParserSym.STRING, yytext());}
 
+
 <YYINITIAL>{ARRAY} {
     tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.ARRAY));
     return symbol (ParserSym.ARRAY, yytext());}
 
-[^] {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.ERROR));
-    return symbol (ParserSym.ERROR, yytext());}
+[^] {tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.ERROR));}
