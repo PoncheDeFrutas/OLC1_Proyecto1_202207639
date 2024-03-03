@@ -22,8 +22,8 @@ LARROW, RARROW, PROGRAM, END, VAR, ARR, DATATYPE, ARITFUNC, ESTFUNC, CONSOLE, PR
 GRAPHTYPE, TITLE, EJES, VALUES, LABEL, EXEC, ID, NUM, STRING, ARRAY;
 
 nonterminal Tree start_program, statments, declaration, expression_statement, console_statement, graph_statement,
-variable_declaration, array_declaration, array_values, expression_list, function_call, argument_list,
-graph_parameters, parameter_list, parameter, expression, expression_char, print_statement;
+variable_declaration, array_declaration, array_values, expression_list, function_call,
+graph_parameters, parameter_list, parameter, expression, expression_char, print_statement, type_declaration;
 
 start with start_program;
 
@@ -166,20 +166,6 @@ function_call::= ESTFUNC:ef LPAREN array_values:av RPAREN{:
     FC.addChild(ex2);
     FC.addChild(new Tree(")"));
     RESULT = FC;
-    :}
-    ;
-
-argument_list::= argument_list:al COMMA expression:ex{:
-    Tree AL = new Tree("AL");
-    AL.addChild(al);
-    AL.addChild(new Tree(","));
-    AL.addChild(ex);
-    RESULT = AL;
-    :}
-    | expression:ex{:
-    Tree AL = new Tree("AL");
-    AL.addChild(ex);
-    RESULT = AL;
     :}
     ;
 

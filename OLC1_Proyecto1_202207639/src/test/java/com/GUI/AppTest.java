@@ -5,6 +5,7 @@ package com.GUI;
 import com.Analyzer.LexemeAnalyzer;
 import com.Analyzer.Parser;
 import com.Analyzer.flexcup;
+import com.Classes.Simbols;
 import com.Classes.Token;
 import com.Classes.Tree;
 import com.Classes.TokenConstant;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -189,5 +191,27 @@ public class AppTest
         tree.printTree(tree);
         //parser.parse();
         System.out.println("Sintactic Analyzer test passed");
+    }
+
+    @Test
+    public void testHashMap() throws  Exception{
+        HashMap<String, Simbols> hash = new HashMap<>();
+
+        Simbols simbolo = new Simbols("numero", "double", "2.5", 1, 1);
+        Simbols simbolo1 = new Simbols("cadena", "char[]", "cadena", 2, 2);
+        Simbols simbolo2 = new Simbols("copia", "double", "numero", 3, 3);
+
+
+        hash.put(simbolo.getName(), simbolo1);
+        hash.put(simbolo1.getName(), simbolo2);
+        hash.put(simbolo2.getName(), simbolo);
+
+
+        System.out.println(hash);
+        System.out.println(hash.get("numero"));
+
+        for(String key : hash.keySet()){
+            System.out.println(key + " " + hash.get(key));
+        }
     }
 }
