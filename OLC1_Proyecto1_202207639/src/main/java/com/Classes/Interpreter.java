@@ -1,17 +1,15 @@
 package com.Classes;
 
+import com.GUI.CombinedGraphs;
 import org.jfree.data.Value;
 
 import java.io.Console;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Interpreter {
     private final HashMap<String, Simbols> hash = new HashMap<>();
     private final ArrayList<String> Instruccions;
-
+    private CombinedGraphs combinedGraphs = new CombinedGraphs();
     private String console_text;
 
     private final List<String> ARITFUNC = Arrays.asList("SUM", "RES", "MUL", "DIV", "MOD");
@@ -38,9 +36,287 @@ public class Interpreter {
                     this.Instruccions.remove(0); //::
                     this.printConsole();
                     break;
+                case("GRAPHBAR"):
+                    this.Instruccions.remove(0); // (
+                    this.graphGraphBL();
+                    break;
+                case("GRAPHLINE"):
+                    this.Instruccions.remove(0); // (
+                    this.graphGraphBL();
+                    break;
+                case("GRAPHPIE"):
+                    this.Instruccions.remove(0); // (
+                    this.graphPH();
+                    break;
+                case("HISTOGRAM"):
+                    this.graphPH();
+                    this.Instruccions.remove(0); // (
+                    break;
             }
         }
 
+    }
+
+    public void graphPH(){
+        String Title = "No Hay titulo";
+        ArrayList<String> labels = new ArrayList<>();
+        ArrayList<Float> values = new ArrayList<>();
+        while(true){
+            String data = this.Instruccions.remove(0); //TITULO, LABEL, VALUES
+            if(data.equals("TITULO")){
+                this.Instruccions.remove(0); //::
+                this.Instruccions.remove(0); // char[]
+                this.Instruccions.remove(0); // =
+                if(this.hash.containsKey(this.Instruccions.get(0))){
+                    if(this.hash.get(this.Instruccions.get(0)).getSvalue() != null){
+                        Title = this.hash.get(this.Instruccions.remove(0)).getSvalue();
+                    } else{
+                        this.Instruccions.remove(0);
+                    }
+                } else{
+                    Title = this.Instruccions.remove(0); //STRING
+                }
+                this.Instruccions.remove(0); // END
+                this.Instruccions.remove(0); // ;
+            } else if (data.equals("LABEL")) {
+                this.Instruccions.remove(0); //::
+                this.Instruccions.remove(0); // char[]
+                this.Instruccions.remove(0); // =
+                data = this.Instruccions.remove(0); // [, @ID
+                if(data == "["){
+                    while (true){
+                        data = this.Instruccions.remove(0); //STRING, ID
+                        if(this.hash.containsKey(data)){
+                            if(this.hash.get(data).getSvalue() != null){
+                                labels.add(this.hash.get(data).getSvalue());
+                            } else{
+                                labels.add("NO ENCONTRADO: " + data);
+                            }
+                        } else if (data.endsWith("”") || data.endsWith("\"")){
+                            labels.add(data);
+                        } else{
+                            labels.add("NO ENCONTRADO: " + data);
+                        }
+                        if(this.Instruccions.remove(0) == "]"){ //,
+                            break;
+                        }
+                    }
+                } else{
+                    if(this.hash.containsKey(data)){
+                        if(this.hash.get(data).getSvalue() != null){
+                            labels.add(this.hash.get(data).getSvalue());
+                        } else{
+                            labels.add("NO ENCONTRADO: " + data);
+                        }
+                    } else{
+                        labels.add(data);
+                    }
+                }
+                this.Instruccions.remove(0); // END
+                this.Instruccions.remove(0); // ;
+            } else if (data.equals("VALUES")) {
+                this.Instruccions.remove(0); //::
+                this.Instruccions.remove(0); // double
+                this.Instruccions.remove(0); // =
+                data = this.Instruccions.remove(0); // [, @ID
+                if(data == "["){
+                    while (true){
+                        data = this.Instruccions.remove(0); //NUM, ID
+                        if(this.hash.containsKey(data)){
+                            values.add(this.hash.get(data).getFvalue());
+                        } else if (this.isParsableToFloat(data)){
+                            values.add(Float.parseFloat(data));
+                        }
+                        if(this.Instruccions.remove(0) == "]"){ //,
+                            break;
+                        }
+                    }
+                } else{
+                    if(this.hash.containsKey(data)){
+                        if(this.hash.get(data).getAFvalue() != null){
+                            values = this.hash.get(data).getAFvalue();
+                        } else{
+                            values = null;
+                        }
+                    } else if (this.isParsableToFloat(data)){
+                        values.add(Float.parseFloat(data));
+                    }
+                }
+                this.Instruccions.remove(0); // END
+                this.Instruccions.remove(0); // ;
+            } else if (data.equals("EXEC")) {
+                break;
+            }
+        }
+        if(this.Instruccions.remove(0).equals("GRAPHPIE")){
+            combinedGraphs.addChartPanel(combinedGraphs.createPieGraph(Title, labels, values));
+        } else{
+            combinedGraphs.addChartPanel(combinedGraphs.createFrequencyBarGraph(Title, values));
+        }
+        console_text += createFrequencyTable(values);
+        this.Instruccions.remove(0); // END
+        this.Instruccions.remove(0); // ;
+        this.Instruccions.remove(0); // )
+        this.Instruccions.remove(0); // END
+        this.Instruccions.remove(0); // ;
+    }
+
+    public String createFrequencyTable(ArrayList<Float> numbers) {
+        // Calcular la frecuencia de cada número
+        Map<Float, Integer> frequencyMap = new HashMap<>();
+        for (float number : numbers) {
+            frequencyMap.put(number, frequencyMap.getOrDefault(number, 0) + 1);
+        }
+
+        // Crear el StringBuilder para la tabla
+        StringBuilder table = new StringBuilder();
+
+        // Agregar el título de la tabla
+        table.append("Análisis de Arreglo\n");
+
+        // Agregar los nombres de las columnas
+        table.append(String.format("%-10s %-10s %-20s %-20s\n", "Valor", "Frecuencia", "Frecuencia Absoluta", "Frecuencia Relativa"));
+
+        // Calcular los totales
+        int totalFrequency = 0;
+        int totalAbsoluteFrequency = 0;
+        float totalRelativeFrequency = 0;
+
+        // Recorrer el HashMap y agregar cada fila a la tabla
+        for (Map.Entry<Float, Integer> entry : frequencyMap.entrySet()) {
+            float value = entry.getKey();
+            int frequency = entry.getValue();
+            int absoluteFrequency = frequency;
+            float relativeFrequency = (float) frequency / numbers.size();
+
+            table.append(String.format("%-10.2f %-10d %-20d %-20.2f\n", value, frequency, absoluteFrequency, relativeFrequency));
+
+            totalFrequency += frequency;
+            totalAbsoluteFrequency += absoluteFrequency;
+            totalRelativeFrequency += relativeFrequency;
+        }
+
+        // Agregar los totales a la tabla
+        table.append(String.format("%-10s %-10d %-20d %-20.2f\n", "Total", totalFrequency, totalAbsoluteFrequency, totalRelativeFrequency));
+
+        return table.toString();
+    }
+
+    public void graphGraphBL(){
+        String Title = "No Hay titulo";
+        String tituloX = "No Hay titulo";
+        String tituloY = "No Hay titulo";
+        ArrayList<String> ejeX = new ArrayList<>();
+        ArrayList<Float> ejeY = new ArrayList<>();
+        while(true){
+            String data = this.Instruccions.remove(0); //TITULO, EJEX, EJEY, TITULOX, TITULOY
+            if(data.equals("TITULO") || data.equals("TITULOX")  || data.equals("TITULOY") ){
+                String tempT = "";
+                this.Instruccions.remove(0); //::
+                this.Instruccions.remove(0); // char[]
+                this.Instruccions.remove(0); // =
+                if(this.hash.containsKey(this.Instruccions.get(0))){
+                    if(this.hash.get(this.Instruccions.get(0)).getSvalue() != null){
+                        tempT = this.hash.get(this.Instruccions.remove(0)).getSvalue();
+                    } else{
+                        this.Instruccions.remove(0);
+                    }
+                } else{
+                    tempT = this.Instruccions.remove(0); //STRING
+                }
+                this.Instruccions.remove(0); // END
+                this.Instruccions.remove(0); // ;
+                switch (data){
+                    case("TITULO"):
+                        Title = tempT;
+                        break;
+                    case("TITULOX"):
+                        tituloX = tempT;
+                        break;
+                    case("TITULOY"):
+                        tituloY = tempT;
+                        break;
+                }
+            } else if (data.equals("EJEX")) {
+                this.Instruccions.remove(0); //::
+                this.Instruccions.remove(0); // char[]
+                this.Instruccions.remove(0); // =
+                data = this.Instruccions.remove(0); // [ / @ID
+                if(data == "["){
+                    while (true){
+                        data = this.Instruccions.remove(0); //STRING, ID
+                        if(this.hash.containsKey(data)){
+                            if(this.hash.get(data).getSvalue() != null){
+                                ejeX.add(this.hash.get(data).getSvalue());
+                            } else{
+                                ejeX.add("NO ENCONTRADO: " + data);
+                            }
+                        } else if (data.endsWith("”") || data.endsWith("\"")){
+                            ejeX.add(data);
+                        } else{
+                            ejeX.add("NO ENCONTRADO: " + data);
+                        }
+                        if(this.Instruccions.remove(0) == "]"){ //,
+                            break;
+                        }
+                    }
+                } else{
+                    if(this.hash.containsKey(data)){
+                        if(this.hash.get(data).getSvalue() != null){
+                            ejeX.add(this.hash.get(data).getSvalue());
+                        } else{
+                            ejeX.add("NO ENCONTRADO: " + data);
+                        }
+                    } else{
+                        ejeX.add(data);
+                    }
+                }
+                this.Instruccions.remove(0); // END
+                this.Instruccions.remove(0); // ;
+
+            } else if (data.equals("EJEY")) {
+                this.Instruccions.remove(0); //::
+                this.Instruccions.remove(0); // double
+                this.Instruccions.remove(0); // =
+                data = this.Instruccions.remove(0); // [ / @ID
+                if(data == "["){
+                    while (true){
+                        data = this.Instruccions.remove(0); //NUM, ID
+                        if(this.hash.containsKey(data)){
+                            ejeY.add(this.hash.get(data).getFvalue());
+                        } else if (this.isParsableToFloat(data)){
+                            ejeY.add(Float.parseFloat(data));
+                        }
+                        if(this.Instruccions.remove(0) == "]"){ //,
+                            break;
+                        }
+                    }
+                } else{
+                    if(this.hash.containsKey(data)){
+                        if(this.hash.get(data).getAFvalue() != null){
+                            ejeY = this.hash.get(data).getAFvalue();
+                        } else{
+                            ejeY = null;
+                        }
+                    } else if (this.isParsableToFloat(data)){
+                        ejeY.add(Float.parseFloat(data));
+                    }
+                }
+                this.Instruccions.remove(0); // END
+                this.Instruccions.remove(0); // ;
+            } else if(data.equals("EXEC")){break;}
+        }
+
+        if (this.Instruccions.remove(0).equals("GRAPHBAR")) {
+            combinedGraphs.addChartPanel(combinedGraphs.createBarGraph(Title, ejeX, ejeY, tituloX, tituloY));
+        } else{
+            combinedGraphs.addChartPanel(combinedGraphs.createLineGraph(Title, ejeX, ejeY, tituloX, tituloY));
+        }
+        this.Instruccions.remove(0); // END
+        this.Instruccions.remove(0); // ;
+        this.Instruccions.remove(0); // )
+        this.Instruccions.remove(0); // END
+        this.Instruccions.remove(0); // ;
     }
 
     public void declareArray() {

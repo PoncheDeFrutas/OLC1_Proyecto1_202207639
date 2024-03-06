@@ -5,29 +5,24 @@ package com.GUI;
 import com.Analyzer.LexemeAnalyzer;
 import com.Analyzer.Parser;
 import com.Analyzer.flexcup;
-import com.Classes.Simbols;
 import com.Classes.Token;
 import com.Classes.Tree;
 import com.Classes.Interpreter;
 import com.Classes.TokenConstant;
+import org.jfree.chart.ChartPanel;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Unit test for simple App.
  */
 public class
-
-
-
-
-
 
 AppTest
 {
@@ -117,19 +112,21 @@ AppTest
     public void testSintacticAnalyzer() throws Exception {
         String testString = """
             PROGRAM
-                var:double:: numero <- 2.5 end;
-                arr:double::@darray <- [1, 2, 3, 4, 5] end;
-                var:char[]:: titulo1 <- “Enteros” end;
-                console::column = “Enteros” -> @darray end;
-                console::column = titulo1 -> [1, numero, 3, 4, 5] end;
+                Histogram(
+                    titulo::char[] = “Analisis de Arreglo” end;
+                    values::char[] = [2,2,2,5,5,7,8] end;
+                    EXEC Histogram end;
+                    ) end;
             END PROGRAM
             """;
         Reader stringReader = new StringReader(testString.toUpperCase());
         flexcup flexcup = new flexcup(stringReader);
         Parser parser = new Parser(flexcup);
+
         Tree tree = (Tree) parser.parse().value;
         tree.saveTree(tree);
         tree.printInstruccions();
+
         System.out.println("--------------------------------*-*-*-*-*-*--------------------------");
         Interpreter interpreter = new Interpreter(tree);
         interpreter.run();
@@ -140,4 +137,50 @@ AppTest
         System.out.println("Sintactic Analyzer test passed");
     }
 
+    @Test
+    public void testGraphs() throws Exception {
+        ArrayList<String> ejeX = new ArrayList<>(Arrays.asList("1 Parcial", "2 parcial", "Final"));
+        ArrayList<Float> ejeY = new ArrayList<>(Arrays.asList(50.0f, 30.0f, 70.0f));
+        ArrayList<String> labels = new ArrayList<>(Arrays.asList("Uno", "Dos", "Tres"));
+        ArrayList<Float> values = new ArrayList<>(Arrays.asList(50.0f, 30.0f, 20.0f));
+
+        CombinedGraphs combinedGraphs = new CombinedGraphs();
+
+        JFrame frame = new JFrame("Test Combined Graphs");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
+        // Crear y mostrar la gráfica de barras
+        ChartPanel barGraph = combinedGraphs.createBarGraph("Estudiantes", ejeX, ejeY, "Actividades", "Notas");
+        //combinedGraphs.replacePanel(frame, barGraph);
+
+        // Esperar 5 segundos
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Crear y mostrar la gráfica de pastel
+        ChartPanel pieGraph = combinedGraphs.createPieGraph("Ejemplo Gráfica de Pie", labels, values);
+        //combinedGraphs.replacePanel(frame, pieGraph);
+
+        // Esperar 5 segundos
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Crear y mostrar la gráfica lineal
+        ChartPanel lineGraph = combinedGraphs.createLineGraph("Gráfica de Línea", ejeX, ejeY, "Actividades", "Notas");
+        //combinedGraphs.replacePanel(frame, lineGraph);
+
+        // Esperar 5 segundos
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
