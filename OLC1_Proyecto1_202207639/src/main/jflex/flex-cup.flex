@@ -9,16 +9,20 @@ import com.Classes.TokenConstant;
 %%
 %public
 %class flexcup
+%{
+    public ArrayList<Token> tokens = new ArrayList<Token>();
 
+    public void addToken(Token token){
+        tokens.add(token);
+    }
+%}
 %cup
 %line
 %column
 
-
-
+%function next_token
 
 %{
-    public ArrayList<Token> tokens = new ArrayList<Token>();
     StringBuffer buffer = new StringBuffer();
 
     private Symbol symbol(int type){
@@ -26,10 +30,6 @@ import com.Classes.TokenConstant;
     }
     private Symbol symbol(int type, Object value){
         return new Symbol(type, yyline, yycolumn, value);
-    }
-
-    public void addToken(Token token){
-            tokens.add(token);
     }
 %}
 

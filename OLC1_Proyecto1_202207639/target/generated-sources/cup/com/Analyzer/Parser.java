@@ -242,7 +242,6 @@ public void unrecovered_syntax_error(Symbol s)throws java.lang.Exception{
 }
 
 
-
 /** Cup generated class to encapsulate user supplied action code.*/
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 class CUP$Parser$actions {
@@ -289,11 +288,11 @@ class CUP$Parser$actions {
 		int stright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree st = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
-    Tree SP = new Tree("SP");
-    SP.addChild(new Tree("PROGRAM"));
+    Tree SP = new Tree("SP", -1, -1);
+    SP.addChild(new Tree("PROGRAM", -1, -1));
     SP.addChild(st);
-    SP.addChild(new Tree("END"));
-    SP.addChild(new Tree("PROGRAM"));
+    SP.addChild(new Tree("END", -1, -1));
+    SP.addChild(new Tree("PROGRAM", -1, -1));
     RESULT = SP;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("start_program",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -311,7 +310,7 @@ class CUP$Parser$actions {
 		int tdright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree td = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree ST = new Tree("ST");
+    Tree ST = new Tree("ST", -1, -1);
     ST.addChild(st);
     ST.addChild(td);
     RESULT = ST;
@@ -328,7 +327,7 @@ class CUP$Parser$actions {
 		int tdright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree td = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree ST = new Tree("ST");
+    Tree ST = new Tree("ST", -1, -1);
     ST.addChild(td);
     RESULT = ST;
     
@@ -344,7 +343,7 @@ class CUP$Parser$actions {
 		int dright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree d = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree TD = new Tree("TD");
+    Tree TD = new Tree("TD", -1, -1);
     TD.addChild(d);
     RESULT = TD;
     
@@ -360,7 +359,7 @@ class CUP$Parser$actions {
 		int esright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree es = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree TD = new Tree("TD");
+    Tree TD = new Tree("TD", -1, -1);
     TD.addChild(es);
     RESULT = TD;
     
@@ -376,7 +375,7 @@ class CUP$Parser$actions {
 		int csright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree cs = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree TD = new Tree("TD");
+    Tree TD = new Tree("TD", -1, -1);
     TD.addChild(cs);
     RESULT = TD;
     
@@ -392,7 +391,7 @@ class CUP$Parser$actions {
 		int gsright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree gs = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree TD = new Tree("TD");
+    Tree TD = new Tree("TD", -1, -1);
     TD.addChild(gs);
     RESULT = TD;
     
@@ -408,7 +407,7 @@ class CUP$Parser$actions {
 		int vdright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree vd = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree D = new Tree("D");
+    Tree D = new Tree("D", -1, -1);
     D.addChild(vd);
     RESULT = D;
     
@@ -424,7 +423,7 @@ class CUP$Parser$actions {
 		int adright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree ad = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree D = new Tree("D");
+    Tree D = new Tree("D", -1, -1);
     D.addChild(ad);
     RESULT = D;
     
@@ -446,16 +445,16 @@ class CUP$Parser$actions {
 		int exright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree ex = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
-    Tree VD = new Tree("VD");
-    VD.addChild(new Tree("VAR"));
-    VD.addChild(new Tree(":"));
-    VD.addChild(new Tree(dt.toString()));
-    VD.addChild(new Tree("::"));
-    VD.addChild(new Tree(id.toString()));
-    VD.addChild(new Tree("<-"));
+    Tree VD = new Tree("VD", -1, -1);
+    VD.addChild(new Tree("VAR", -1, -1));
+    VD.addChild(new Tree(":", -1, -1));
+    VD.addChild(new Tree(dt.toString(), dtleft, dtright));
+    VD.addChild(new Tree("::", -1, -1));
+    VD.addChild(new Tree(id.toString(), idleft, idright));
+    VD.addChild(new Tree("<-", -1, -1));
     VD.addChild(ex);
-    VD.addChild(new Tree("END"));
-    VD.addChild(new Tree(";"));
+    VD.addChild(new Tree("END", -1, -1));
+    VD.addChild(new Tree(";", -1, -1));
     RESULT = VD;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_declaration",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -476,16 +475,16 @@ class CUP$Parser$actions {
 		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
-    Tree AD = new Tree("AD");
-    AD.addChild(new Tree("ARR"));
-    AD.addChild(new Tree(":"));
-    AD.addChild(new Tree(dt.toString()));
-    AD.addChild(new Tree("::"));
-    AD.addChild(new Tree(ar.toString()));
-    AD.addChild(new Tree("<-"));
+    Tree AD = new Tree("AD", -1, -1);
+    AD.addChild(new Tree("ARR", -1, -1));
+    AD.addChild(new Tree(":", -1, -1));
+    AD.addChild(new Tree(dt.toString(), dtleft, dtright));
+    AD.addChild(new Tree("::", -1, -1));
+    AD.addChild(new Tree(ar.toString(), arleft, arright));
+    AD.addChild(new Tree("<-", -1, -1));
     AD.addChild(av);
-    AD.addChild(new Tree("END"));
-    AD.addChild(new Tree(";"));
+    AD.addChild(new Tree("END", -1, -1));
+    AD.addChild(new Tree(";", -1, -1));
     RESULT = AD;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("array_declaration",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -500,10 +499,10 @@ class CUP$Parser$actions {
 		int exlright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		Tree exl = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		
-    Tree AV = new Tree("AV");
-    AV.addChild(new Tree("["));
+    Tree AV = new Tree("AV", -1, -1);
+    AV.addChild(new Tree("[", -1, -1));
     AV.addChild(exl);
-    AV.addChild(new Tree("]"));
+    AV.addChild(new Tree("]", -1, -1));
     RESULT = AV;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("array_values",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -518,8 +517,8 @@ class CUP$Parser$actions {
 		int arright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object ar = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree AV = new Tree("AV");
-    AV.addChild(new Tree(ar.toString()));
+    Tree AV = new Tree("AV", -1, -1);
+    AV.addChild(new Tree(ar.toString(), arleft, arright));
     RESULT = AV;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("array_values",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -546,9 +545,9 @@ class CUP$Parser$actions {
 		int exright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree ex = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree EXL = new Tree("EXL");
+    Tree EXL = new Tree("EXL", -1, -1);
     EXL.addChild(exl);
-    EXL.addChild(new Tree(","));
+    EXL.addChild(new Tree(",", -1, -1));
     EXL.addChild(ex);
     RESULT = EXL;
     
@@ -564,7 +563,7 @@ class CUP$Parser$actions {
 		int exright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree ex = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree EXL = new Tree("EXL");
+    Tree EXL = new Tree("EXL", -1, -1);
     EXL.addChild(ex);
     RESULT = EXL;
     
@@ -580,7 +579,7 @@ class CUP$Parser$actions {
 		int fcright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree fc = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree EXS = new Tree("EXS");
+    Tree EXS = new Tree("EXS", -1, -1);
     EXS.addChild(fc);
     RESULT = EXS;
     
@@ -599,11 +598,11 @@ class CUP$Parser$actions {
 		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		
-    Tree FC = new Tree("FC");
-    FC.addChild(new Tree(ef.toString()));
-    FC.addChild(new Tree("("));
+    Tree FC = new Tree("FC", -1, -1);
+    FC.addChild(new Tree(ef.toString(), efleft, efright));
+    FC.addChild(new Tree("(", -1, -1));
     FC.addChild(av);
-    FC.addChild(new Tree(")"));
+    FC.addChild(new Tree(")", -1, -1));
     RESULT = FC;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("function_call",10, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -624,13 +623,13 @@ class CUP$Parser$actions {
 		int ex2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		Tree ex2 = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		
-    Tree FC = new Tree("FC");
-    FC.addChild(new Tree(af.toString()));
-    FC.addChild(new Tree("("));
+    Tree FC = new Tree("FC", -1, -1);
+    FC.addChild(new Tree(af.toString(), afleft, afright));
+    FC.addChild(new Tree("(", -1, -1));
     FC.addChild(ex1);
-    FC.addChild(new Tree(","));
+    FC.addChild(new Tree(",", -1, -1));
     FC.addChild(ex2);
-    FC.addChild(new Tree(")"));
+    FC.addChild(new Tree(")", -1, -1));
     RESULT = FC;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("function_call",10, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -645,9 +644,9 @@ class CUP$Parser$actions {
 		int psright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree ps = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree CS = new Tree("CS");
-    CS.addChild(new Tree("CONSOLE"));
-    CS.addChild(new Tree("::"));
+    Tree CS = new Tree("CS", -1, -1);
+    CS.addChild(new Tree("CONSOLE", -1, -1));
+    CS.addChild(new Tree("::", -1, -1));
     CS.addChild(ps);
     RESULT = CS;
     
@@ -663,12 +662,12 @@ class CUP$Parser$actions {
 		int exlright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree exl = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
-    Tree PS = new Tree("PS");
-    PS.addChild(new Tree("PRINT"));
-    PS.addChild(new Tree("="));
+    Tree PS = new Tree("PS", -1, -1);
+    PS.addChild(new Tree("PRINT", -1, -1));
+    PS.addChild(new Tree("=", -1, -1));
     PS.addChild(exl);
-    PS.addChild(new Tree("END"));
-    PS.addChild(new Tree(";"));
+    PS.addChild(new Tree("END", -1, -1));
+    PS.addChild(new Tree(";", -1, -1));
     RESULT = PS;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("print_statement",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -686,14 +685,14 @@ class CUP$Parser$actions {
 		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
-    Tree PS = new Tree("PS");
-    PS.addChild(new Tree("COLUMN"));
-    PS.addChild(new Tree("="));
+    Tree PS = new Tree("PS", -1, -1);
+    PS.addChild(new Tree("COLUMN", -1, -1));
+    PS.addChild(new Tree("=", -1, -1));
     PS.addChild(exc);
-    PS.addChild(new Tree("->"));
+    PS.addChild(new Tree("->", -1, -1));
     PS.addChild(av);
-    PS.addChild(new Tree("END"));
-    PS.addChild(new Tree(";"));
+    PS.addChild(new Tree("END", -1, -1));
+    PS.addChild(new Tree(";", -1, -1));
     RESULT = PS;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("print_statement",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -711,13 +710,13 @@ class CUP$Parser$actions {
 		int gpright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
 		Tree gp = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
 		
-    Tree GS = new Tree("GS");
-    GS.addChild(new Tree(gt.toString()));
-    GS.addChild(new Tree("("));
+    Tree GS = new Tree("GS", -1, -1);
+    GS.addChild(new Tree(gt.toString(), gtleft, gtright));
+    GS.addChild(new Tree("(", -1, -1));
     GS.addChild(gp);
-    GS.addChild(new Tree(")"));
-    GS.addChild(new Tree("END"));
-    GS.addChild(new Tree(";"));
+    GS.addChild(new Tree(")", -1, -1));
+    GS.addChild(new Tree("END", -1, -1));
+    GS.addChild(new Tree(";", -1, -1));
     RESULT = GS;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("graph_statement",5, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -735,12 +734,12 @@ class CUP$Parser$actions {
 		int gtright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Object gt = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
-    Tree GP = new Tree("GP");
+    Tree GP = new Tree("GP", -1, -1);
     GP.addChild(pl);
-    GP.addChild(new Tree("EXEC"));
-    GP.addChild(new Tree(gt.toString()));
-    GP.addChild(new Tree("END"));
-    GP.addChild(new Tree(";"));
+    GP.addChild(new Tree("EXEC", -1, -1));
+    GP.addChild(new Tree(gt.toString(), gtleft, gtright));
+    GP.addChild(new Tree("END", -1, -1));
+    GP.addChild(new Tree(";", -1, -1));
     RESULT = GP;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("graph_parameters",11, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -758,7 +757,7 @@ class CUP$Parser$actions {
 		int pright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree p = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree PL = new Tree("PL");
+    Tree PL = new Tree("PL", -1, -1);
     PL.addChild(pl);
     PL.addChild(p);
     RESULT = PL;
@@ -775,7 +774,7 @@ class CUP$Parser$actions {
 		int pright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree p = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree PL = new Tree("PL");
+    Tree PL = new Tree("PL", -1, -1);
     PL.addChild(p);
     RESULT = PL;
     
@@ -797,14 +796,14 @@ class CUP$Parser$actions {
 		int excright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree exc = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
-    Tree P = new Tree("P");
-    P.addChild(new Tree(t.toString()));
-    P.addChild(new Tree("::"));
-    P.addChild(new Tree(dt.toString()));
-    P.addChild(new Tree("="));
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree(t.toString(), tleft, tright));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
     P.addChild(exc);
-    P.addChild(new Tree("END"));
-    P.addChild(new Tree(";"));
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
     RESULT = P;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -825,14 +824,14 @@ class CUP$Parser$actions {
 		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
-    Tree P = new Tree("P");
-    P.addChild(new Tree(e.toString()));
-    P.addChild(new Tree("::"));
-    P.addChild(new Tree(dt.toString()));
-    P.addChild(new Tree("="));
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree(e.toString(), eleft, eright));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
     P.addChild(av);
-    P.addChild(new Tree("END"));
-    P.addChild(new Tree(";"));
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
     RESULT = P;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -850,14 +849,14 @@ class CUP$Parser$actions {
 		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
-    Tree P = new Tree("P");
-    P.addChild(new Tree("VALUES"));
-    P.addChild(new Tree("::"));
-    P.addChild(new Tree(dt.toString()));
-    P.addChild(new Tree("="));
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree("VALUES", -1, -1));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
     P.addChild(av);
-    P.addChild(new Tree("END"));
-    P.addChild(new Tree(";"));
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
     RESULT = P;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -878,14 +877,14 @@ class CUP$Parser$actions {
 		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
-    Tree P = new Tree("P");
-    P.addChild(new Tree(l.toString()));
-    P.addChild(new Tree("::"));
-    P.addChild(new Tree(dt.toString()));
-    P.addChild(new Tree("="));
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree(l.toString(), lleft, lright));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
     P.addChild(av);
-    P.addChild(new Tree("END"));
-    P.addChild(new Tree(";"));
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
     RESULT = P;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -909,7 +908,7 @@ class CUP$Parser$actions {
 		int fcright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Tree fc = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree EX = new Tree("EX");
+    Tree EX = new Tree("EX", -1, -1);
     EX.addChild(fc);
     RESULT = EX;
     
@@ -925,8 +924,8 @@ class CUP$Parser$actions {
 		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree EX = new Tree("EX");
-    EX.addChild(new Tree(id.toString()));
+    Tree EX = new Tree("EX", -1, -1);
+    EX.addChild(new Tree(id.toString(), idleft, idright));
     RESULT = EX;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -941,8 +940,8 @@ class CUP$Parser$actions {
 		int numright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object num = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree EX = new Tree("EX");
-    EX.addChild(new Tree(num.toString()));
+    Tree EX = new Tree("EX", -1, -1);
+    EX.addChild(new Tree(num.toString(), numleft, numright));
     RESULT = EX;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -957,8 +956,8 @@ class CUP$Parser$actions {
 		int strright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object str = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree EX = new Tree("EX");
-    EX.addChild(new Tree(str.toString()));
+    Tree EX = new Tree("EX", -1, -1);
+    EX.addChild(new Tree(str.toString(), strleft, strright));
     RESULT = EX;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -982,8 +981,8 @@ class CUP$Parser$actions {
 		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree EXC = new Tree("EXC");
-    EXC.addChild(new Tree(id.toString()));
+    Tree EXC = new Tree("EXC", -1, -1);
+    EXC.addChild(new Tree(id.toString(), idleft, idright));
     RESULT = EXC;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression_char",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -998,8 +997,8 @@ class CUP$Parser$actions {
 		int strright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object str = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    Tree EXC = new Tree("EXC");
-    EXC.addChild(new Tree(str.toString()));
+    Tree EXC = new Tree("EXC", -1, -1);
+    EXC.addChild(new Tree(str.toString(), strleft, strright));
     RESULT = EXC;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression_char",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);

@@ -14,7 +14,6 @@ public void syntax_error(Symbol s){
 public void unrecovered_syntax_error(Symbol s)throws java.lang.Exception{
 	System.out.println("Sintax error: " +s.value + " en la línea " + s.right+" en la columna " + s.left);
 }
-
 :};
 
 terminal EQUAL, LPAREN, RPAREN, LBRACKET, RBRACKET, COMMA, SEMICOLON, COLON, DOUBLECOLON,
@@ -29,45 +28,45 @@ start with start_program;
 
 /*Producción Principal*/
 start_program::= PROGRAM statments:st END PROGRAM {:
-    Tree SP = new Tree("SP");
-    SP.addChild(new Tree("PROGRAM"));
+    Tree SP = new Tree("SP", -1, -1);
+    SP.addChild(new Tree("PROGRAM", -1, -1));
     SP.addChild(st);
-    SP.addChild(new Tree("END"));
-    SP.addChild(new Tree("PROGRAM"));
+    SP.addChild(new Tree("END", -1, -1));
+    SP.addChild(new Tree("PROGRAM", -1, -1));
     RESULT = SP;
     :}
     ;
 
 statments::= statments:st type_declaration:td{:
-    Tree ST = new Tree("ST");
+    Tree ST = new Tree("ST", -1, -1);
     ST.addChild(st);
     ST.addChild(td);
     RESULT = ST;
     :}
     | type_declaration:td{:
-    Tree ST = new Tree("ST");
+    Tree ST = new Tree("ST", -1, -1);
     ST.addChild(td);
     RESULT = ST;
     :}
     ;
 
 type_declaration::= declaration:d{:
-    Tree TD = new Tree("TD");
+    Tree TD = new Tree("TD", -1, -1);
     TD.addChild(d);
     RESULT = TD;
     :}
     | expression_statement:es{:
-    Tree TD = new Tree("TD");
+    Tree TD = new Tree("TD", -1, -1);
     TD.addChild(es);
     RESULT = TD;
     :}
     | console_statement:cs{:
-    Tree TD = new Tree("TD");
+    Tree TD = new Tree("TD", -1, -1);
     TD.addChild(cs);
     RESULT = TD;
     :}
     | graph_statement:gs{:
-    Tree TD = new Tree("TD");
+    Tree TD = new Tree("TD", -1, -1);
     TD.addChild(gs);
     RESULT = TD;
     :}
@@ -75,242 +74,242 @@ type_declaration::= declaration:d{:
 
 /*Producción para Variables*/
 declaration::= variable_declaration:vd{:
-    Tree D = new Tree("D");
+    Tree D = new Tree("D", -1, -1);
     D.addChild(vd);
     RESULT = D;
     :}
     | array_declaration:ad{:
-    Tree D = new Tree("D");
+    Tree D = new Tree("D", -1, -1);
     D.addChild(ad);
     RESULT = D;
     :}
     ;
 
 variable_declaration::= VAR COLON DATATYPE:dt DOUBLECOLON ID:id LARROW expression:ex END SEMICOLON{:
-    Tree VD = new Tree("VD");
-    VD.addChild(new Tree("VAR"));
-    VD.addChild(new Tree(":"));
-    VD.addChild(new Tree(dt.toString()));
-    VD.addChild(new Tree("::"));
-    VD.addChild(new Tree(id.toString()));
-    VD.addChild(new Tree("<-"));
+    Tree VD = new Tree("VD", -1, -1);
+    VD.addChild(new Tree("VAR", -1, -1));
+    VD.addChild(new Tree(":", -1, -1));
+    VD.addChild(new Tree(dt.toString(), dtleft, dtright));
+    VD.addChild(new Tree("::", -1, -1));
+    VD.addChild(new Tree(id.toString(), idleft, idright));
+    VD.addChild(new Tree("<-", -1, -1));
     VD.addChild(ex);
-    VD.addChild(new Tree("END"));
-    VD.addChild(new Tree(";"));
+    VD.addChild(new Tree("END", -1, -1));
+    VD.addChild(new Tree(";", -1, -1));
     RESULT = VD;
     :};
 
 array_declaration::= ARR COLON DATATYPE:dt DOUBLECOLON ARRAY:ar LARROW array_values:av END SEMICOLON{:
-    Tree AD = new Tree("AD");
-    AD.addChild(new Tree("ARR"));
-    AD.addChild(new Tree(":"));
-    AD.addChild(new Tree(dt.toString()));
-    AD.addChild(new Tree("::"));
-    AD.addChild(new Tree(ar.toString()));
-    AD.addChild(new Tree("<-"));
+    Tree AD = new Tree("AD", -1, -1);
+    AD.addChild(new Tree("ARR", -1, -1));
+    AD.addChild(new Tree(":", -1, -1));
+    AD.addChild(new Tree(dt.toString(), dtleft, dtright));
+    AD.addChild(new Tree("::", -1, -1));
+    AD.addChild(new Tree(ar.toString(), arleft, arright));
+    AD.addChild(new Tree("<-", -1, -1));
     AD.addChild(av);
-    AD.addChild(new Tree("END"));
-    AD.addChild(new Tree(";"));
+    AD.addChild(new Tree("END", -1, -1));
+    AD.addChild(new Tree(";", -1, -1));
     RESULT = AD;
     :};
 
 array_values::= LBRACKET expression_list:exl RBRACKET{:
-    Tree AV = new Tree("AV");
-    AV.addChild(new Tree("["));
+    Tree AV = new Tree("AV", -1, -1);
+    AV.addChild(new Tree("[", -1, -1));
     AV.addChild(exl);
-    AV.addChild(new Tree("]"));
+    AV.addChild(new Tree("]", -1, -1));
     RESULT = AV;
     :}
     | ARRAY:ar{:
-    Tree AV = new Tree("AV");
-    AV.addChild(new Tree(ar.toString()));
+    Tree AV = new Tree("AV", -1, -1);
+    AV.addChild(new Tree(ar.toString(), arleft, arright));
     RESULT = AV;
     :}
     | error
     ;
 
 expression_list::= expression_list:exl COMMA expression:ex{:
-    Tree EXL = new Tree("EXL");
+    Tree EXL = new Tree("EXL", -1, -1);
     EXL.addChild(exl);
-    EXL.addChild(new Tree(","));
+    EXL.addChild(new Tree(",", -1, -1));
     EXL.addChild(ex);
     RESULT = EXL;
     :}
     | expression:ex{:
-    Tree EXL = new Tree("EXL");
+    Tree EXL = new Tree("EXL", -1, -1);
     EXL.addChild(ex);
     RESULT = EXL;
     :}
     ;
 
 expression_statement::= function_call:fc{:
-    Tree EXS = new Tree("EXS");
+    Tree EXS = new Tree("EXS", -1, -1);
     EXS.addChild(fc);
     RESULT = EXS;
     :};
 
 function_call::= ESTFUNC:ef LPAREN array_values:av RPAREN{:
-    Tree FC = new Tree("FC");
-    FC.addChild(new Tree(ef.toString()));
-    FC.addChild(new Tree("("));
+    Tree FC = new Tree("FC", -1, -1);
+    FC.addChild(new Tree(ef.toString(), efleft, efright));
+    FC.addChild(new Tree("(", -1, -1));
     FC.addChild(av);
-    FC.addChild(new Tree(")"));
+    FC.addChild(new Tree(")", -1, -1));
     RESULT = FC;
     :}
     | ARITFUNC:af LPAREN expression:ex1 COMMA expression:ex2 RPAREN{:
-    Tree FC = new Tree("FC");
-    FC.addChild(new Tree(af.toString()));
-    FC.addChild(new Tree("("));
+    Tree FC = new Tree("FC", -1, -1);
+    FC.addChild(new Tree(af.toString(), afleft, afright));
+    FC.addChild(new Tree("(", -1, -1));
     FC.addChild(ex1);
-    FC.addChild(new Tree(","));
+    FC.addChild(new Tree(",", -1, -1));
     FC.addChild(ex2);
-    FC.addChild(new Tree(")"));
+    FC.addChild(new Tree(")", -1, -1));
     RESULT = FC;
     :}
     ;
 
 console_statement::= CONSOLE DOUBLECOLON print_statement:ps{:
-    Tree CS = new Tree("CS");
-    CS.addChild(new Tree("CONSOLE"));
-    CS.addChild(new Tree("::"));
+    Tree CS = new Tree("CS", -1, -1);
+    CS.addChild(new Tree("CONSOLE", -1, -1));
+    CS.addChild(new Tree("::", -1, -1));
     CS.addChild(ps);
     RESULT = CS;
     :};
 
 print_statement::= PRINT EQUAL expression_list:exl END SEMICOLON{:
-    Tree PS = new Tree("PS");
-    PS.addChild(new Tree("PRINT"));
-    PS.addChild(new Tree("="));
+    Tree PS = new Tree("PS", -1, -1);
+    PS.addChild(new Tree("PRINT", -1, -1));
+    PS.addChild(new Tree("=", -1, -1));
     PS.addChild(exl);
-    PS.addChild(new Tree("END"));
-    PS.addChild(new Tree(";"));
+    PS.addChild(new Tree("END", -1, -1));
+    PS.addChild(new Tree(";", -1, -1));
     RESULT = PS;
     :}
     |   COLUMN EQUAL expression_char:exc RARROW array_values:av END SEMICOLON{:
-    Tree PS = new Tree("PS");
-    PS.addChild(new Tree("COLUMN"));
-    PS.addChild(new Tree("="));
+    Tree PS = new Tree("PS", -1, -1);
+    PS.addChild(new Tree("COLUMN", -1, -1));
+    PS.addChild(new Tree("=", -1, -1));
     PS.addChild(exc);
-    PS.addChild(new Tree("->"));
+    PS.addChild(new Tree("->", -1, -1));
     PS.addChild(av);
-    PS.addChild(new Tree("END"));
-    PS.addChild(new Tree(";"));
+    PS.addChild(new Tree("END", -1, -1));
+    PS.addChild(new Tree(";", -1, -1));
     RESULT = PS;
     :}
     ;
 
 graph_statement::= GRAPHTYPE:gt LPAREN graph_parameters:gp RPAREN END SEMICOLON{:
-    Tree GS = new Tree("GS");
-    GS.addChild(new Tree(gt.toString()));
-    GS.addChild(new Tree("("));
+    Tree GS = new Tree("GS", -1, -1);
+    GS.addChild(new Tree(gt.toString(), gtleft, gtright));
+    GS.addChild(new Tree("(", -1, -1));
     GS.addChild(gp);
-    GS.addChild(new Tree(")"));
-    GS.addChild(new Tree("END"));
-    GS.addChild(new Tree(";"));
+    GS.addChild(new Tree(")", -1, -1));
+    GS.addChild(new Tree("END", -1, -1));
+    GS.addChild(new Tree(";", -1, -1));
     RESULT = GS;
     :};
 
 graph_parameters::= parameter_list:pl EXEC GRAPHTYPE:gt END SEMICOLON{:
-    Tree GP = new Tree("GP");
+    Tree GP = new Tree("GP", -1, -1);
     GP.addChild(pl);
-    GP.addChild(new Tree("EXEC"));
-    GP.addChild(new Tree(gt.toString()));
-    GP.addChild(new Tree("END"));
-    GP.addChild(new Tree(";"));
+    GP.addChild(new Tree("EXEC", -1, -1));
+    GP.addChild(new Tree(gt.toString(), gtleft, gtright));
+    GP.addChild(new Tree("END", -1, -1));
+    GP.addChild(new Tree(";", -1, -1));
     RESULT = GP;
     :};
 
 parameter_list::= parameter_list:pl parameter:p{:
-    Tree PL = new Tree("PL");
+    Tree PL = new Tree("PL", -1, -1);
     PL.addChild(pl);
     PL.addChild(p);
     RESULT = PL;
     :}
     | parameter:p{:
-    Tree PL = new Tree("PL");
+    Tree PL = new Tree("PL", -1, -1);
     PL.addChild(p);
     RESULT = PL;
     :}
     ;
 
 parameter::= TITLE:t DOUBLECOLON DATATYPE:dt EQUAL expression_char:exc END SEMICOLON{:
-    Tree P = new Tree("P");
-    P.addChild(new Tree(t.toString()));
-    P.addChild(new Tree("::"));
-    P.addChild(new Tree(dt.toString()));
-    P.addChild(new Tree("="));
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree(t.toString(), tleft, tright));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
     P.addChild(exc);
-    P.addChild(new Tree("END"));
-    P.addChild(new Tree(";"));
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
     RESULT = P;
     :}
     | EJES:e DOUBLECOLON DATATYPE:dt EQUAL array_values:av END SEMICOLON{:
-    Tree P = new Tree("P");
-    P.addChild(new Tree(e.toString()));
-    P.addChild(new Tree("::"));
-    P.addChild(new Tree(dt.toString()));
-    P.addChild(new Tree("="));
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree(e.toString(), eleft, eright));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
     P.addChild(av);
-    P.addChild(new Tree("END"));
-    P.addChild(new Tree(";"));
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
     RESULT = P;
     :}
     | VALUES DOUBLECOLON DATATYPE:dt EQUAL array_values:av END SEMICOLON{:
-    Tree P = new Tree("P");
-    P.addChild(new Tree("VALUES"));
-    P.addChild(new Tree("::"));
-    P.addChild(new Tree(dt.toString()));
-    P.addChild(new Tree("="));
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree("VALUES", -1, -1));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
     P.addChild(av);
-    P.addChild(new Tree("END"));
-    P.addChild(new Tree(";"));
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
     RESULT = P;
     :}
     | LABEL:l DOUBLECOLON DATATYPE:dt EQUAL array_values:av END SEMICOLON{:
-    Tree P = new Tree("P");
-    P.addChild(new Tree(l.toString()));
-    P.addChild(new Tree("::"));
-    P.addChild(new Tree(dt.toString()));
-    P.addChild(new Tree("="));
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree(l.toString(), lleft, lright));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
     P.addChild(av);
-    P.addChild(new Tree("END"));
-    P.addChild(new Tree(";"));
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
     RESULT = P;
     :}
     | error
     ;
 
 expression::= function_call:fc{:
-    Tree EX = new Tree("EX");
+    Tree EX = new Tree("EX", -1, -1);
     EX.addChild(fc);
     RESULT = EX;
     :}
     | ID:id{:
-    Tree EX = new Tree("EX");
-    EX.addChild(new Tree(id.toString()));
+    Tree EX = new Tree("EX", -1, -1);
+    EX.addChild(new Tree(id.toString(), idleft, idright));
     RESULT = EX;
     :}
     | NUM:num{:
-    Tree EX = new Tree("EX");
-    EX.addChild(new Tree(num.toString()));
+    Tree EX = new Tree("EX", -1, -1);
+    EX.addChild(new Tree(num.toString(), numleft, numright));
     RESULT = EX;
     :}
     | STRING:str{:
-    Tree EX = new Tree("EX");
-    EX.addChild(new Tree(str.toString()));
+    Tree EX = new Tree("EX", -1, -1);
+    EX.addChild(new Tree(str.toString(), strleft, strright));
     RESULT = EX;
     :}
     | error
     ;
 
 expression_char::= ID:id{:
-    Tree EXC = new Tree("EXC");
-    EXC.addChild(new Tree(id.toString()));
+    Tree EXC = new Tree("EXC", -1, -1);
+    EXC.addChild(new Tree(id.toString(), idleft, idright));
     RESULT = EXC;
     :}
     | STRING:str{:
-    Tree EXC = new Tree("EXC");
-    EXC.addChild(new Tree(str.toString()));
+    Tree EXC = new Tree("EXC", -1, -1);
+    EXC.addChild(new Tree(str.toString(), strleft, strright));
     RESULT = EXC;
     :}
     | error

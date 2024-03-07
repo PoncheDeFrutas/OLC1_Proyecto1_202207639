@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Interpreter {
     private final HashMap<String, Simbols> hash = new HashMap<>();
-    private final ArrayList<String> Instruccions;
+    private final ArrayList<Intruccions> Instruccions;
     private CombinedGraphs combinedGraphs = new CombinedGraphs();
     private String console_text;
 
@@ -22,7 +22,7 @@ public class Interpreter {
 
     public void run(){
         while(!this.Instruccions.isEmpty()){
-            String instruccion = this.Instruccions.remove(0);
+            String instruccion = this.Instruccions.remove(0).getLexeme();
             switch (instruccion){
                 case("VAR"):
                     this.Instruccions.remove(0); //:
@@ -62,7 +62,7 @@ public class Interpreter {
         ArrayList<String> labels = new ArrayList<>();
         ArrayList<Float> values = new ArrayList<>();
         while(true){
-            String data = this.Instruccions.remove(0); //TITULO, LABEL, VALUES
+            String data = this.Instruccions.remove(0).getLexeme(); //TITULO, LABEL, VALUES
             if(data.equals("TITULO")){
                 this.Instruccions.remove(0); //::
                 this.Instruccions.remove(0); // char[]
@@ -74,7 +74,7 @@ public class Interpreter {
                         this.Instruccions.remove(0);
                     }
                 } else{
-                    Title = this.Instruccions.remove(0); //STRING
+                    Title = this.Instruccions.remove(0).getLexeme(); //STRING
                 }
                 this.Instruccions.remove(0); // END
                 this.Instruccions.remove(0); // ;
@@ -82,10 +82,10 @@ public class Interpreter {
                 this.Instruccions.remove(0); //::
                 this.Instruccions.remove(0); // char[]
                 this.Instruccions.remove(0); // =
-                data = this.Instruccions.remove(0); // [, @ID
+                data = this.Instruccions.remove(0).getLexeme(); // [, @ID
                 if(data == "["){
                     while (true){
-                        data = this.Instruccions.remove(0); //STRING, ID
+                        data = this.Instruccions.remove(0).getLexeme(); //STRING, ID
                         if(this.hash.containsKey(data)){
                             if(this.hash.get(data).getSvalue() != null){
                                 labels.add(this.hash.get(data).getSvalue());
@@ -97,7 +97,7 @@ public class Interpreter {
                         } else{
                             labels.add("NO ENCONTRADO: " + data);
                         }
-                        if(this.Instruccions.remove(0) == "]"){ //,
+                        if(this.Instruccions.remove(0).getLexeme() == "]"){ //,
                             break;
                         }
                     }
@@ -118,16 +118,16 @@ public class Interpreter {
                 this.Instruccions.remove(0); //::
                 this.Instruccions.remove(0); // double
                 this.Instruccions.remove(0); // =
-                data = this.Instruccions.remove(0); // [, @ID
+                data = this.Instruccions.remove(0).getLexeme(); // [, @ID
                 if(data == "["){
                     while (true){
-                        data = this.Instruccions.remove(0); //NUM, ID
+                        data = this.Instruccions.remove(0).getLexeme(); //NUM, ID
                         if(this.hash.containsKey(data)){
                             values.add(this.hash.get(data).getFvalue());
                         } else if (this.isParsableToFloat(data)){
                             values.add(Float.parseFloat(data));
                         }
-                        if(this.Instruccions.remove(0) == "]"){ //,
+                        if(this.Instruccions.remove(0).getLexeme() == "]"){ //,
                             break;
                         }
                     }
@@ -148,7 +148,7 @@ public class Interpreter {
                 break;
             }
         }
-        if(this.Instruccions.remove(0).equals("GRAPHPIE")){
+        if(this.Instruccions.remove(0).getLexeme().equals("GRAPHPIE")){
             combinedGraphs.addChartPanel(combinedGraphs.createPieGraph(Title, labels, values));
         } else{
             combinedGraphs.addChartPanel(combinedGraphs.createFrequencyBarGraph(Title, values));
@@ -209,7 +209,7 @@ public class Interpreter {
         ArrayList<String> ejeX = new ArrayList<>();
         ArrayList<Float> ejeY = new ArrayList<>();
         while(true){
-            String data = this.Instruccions.remove(0); //TITULO, EJEX, EJEY, TITULOX, TITULOY
+            String data = this.Instruccions.remove(0).getLexeme(); //TITULO, EJEX, EJEY, TITULOX, TITULOY
             if(data.equals("TITULO") || data.equals("TITULOX")  || data.equals("TITULOY") ){
                 String tempT = "";
                 this.Instruccions.remove(0); //::
@@ -222,7 +222,7 @@ public class Interpreter {
                         this.Instruccions.remove(0);
                     }
                 } else{
-                    tempT = this.Instruccions.remove(0); //STRING
+                    tempT = this.Instruccions.remove(0).getLexeme(); //STRING
                 }
                 this.Instruccions.remove(0); // END
                 this.Instruccions.remove(0); // ;
@@ -241,10 +241,10 @@ public class Interpreter {
                 this.Instruccions.remove(0); //::
                 this.Instruccions.remove(0); // char[]
                 this.Instruccions.remove(0); // =
-                data = this.Instruccions.remove(0); // [ / @ID
+                data = this.Instruccions.remove(0).getLexeme(); // [ / @ID
                 if(data == "["){
                     while (true){
-                        data = this.Instruccions.remove(0); //STRING, ID
+                        data = this.Instruccions.remove(0).getLexeme(); //STRING, ID
                         if(this.hash.containsKey(data)){
                             if(this.hash.get(data).getSvalue() != null){
                                 ejeX.add(this.hash.get(data).getSvalue());
@@ -256,7 +256,7 @@ public class Interpreter {
                         } else{
                             ejeX.add("NO ENCONTRADO: " + data);
                         }
-                        if(this.Instruccions.remove(0) == "]"){ //,
+                        if(this.Instruccions.remove(0).getLexeme() == "]"){ //,
                             break;
                         }
                     }
@@ -278,16 +278,16 @@ public class Interpreter {
                 this.Instruccions.remove(0); //::
                 this.Instruccions.remove(0); // double
                 this.Instruccions.remove(0); // =
-                data = this.Instruccions.remove(0); // [ / @ID
+                data = this.Instruccions.remove(0).getLexeme(); // [ / @ID
                 if(data == "["){
                     while (true){
-                        data = this.Instruccions.remove(0); //NUM, ID
+                        data = this.Instruccions.remove(0).getLexeme(); //NUM, ID
                         if(this.hash.containsKey(data)){
                             ejeY.add(this.hash.get(data).getFvalue());
                         } else if (this.isParsableToFloat(data)){
                             ejeY.add(Float.parseFloat(data));
                         }
-                        if(this.Instruccions.remove(0) == "]"){ //,
+                        if(this.Instruccions.remove(0).getLexeme() == "]"){ //,
                             break;
                         }
                     }
@@ -307,7 +307,7 @@ public class Interpreter {
             } else if(data.equals("EXEC")){break;}
         }
 
-        if (this.Instruccions.remove(0).equals("GRAPHBAR")) {
+        if (this.Instruccions.remove(0).getLexeme().equals("GRAPHBAR")) {
             combinedGraphs.addChartPanel(combinedGraphs.createBarGraph(Title, ejeX, ejeY, tituloX, tituloY));
         } else{
             combinedGraphs.addChartPanel(combinedGraphs.createLineGraph(Title, ejeX, ejeY, tituloX, tituloY));
@@ -320,9 +320,9 @@ public class Interpreter {
     }
 
     public void declareArray() {
-        String type = this.Instruccions.remove(0); // DOUBLE, CHAR[]
+        String type = this.Instruccions.remove(0).getLexeme(); // DOUBLE, CHAR[]
         this.Instruccions.remove(0); //::
-        String name = this.Instruccions.remove(0);
+        Intruccions name = this.Instruccions.remove(0);
         this.Instruccions.remove(0); // <-
         this.Instruccions.remove(0); // [
         switch (type) {
@@ -330,25 +330,25 @@ public class Interpreter {
                 ArrayList<Float> array = new ArrayList<Float>();
                 while (true){
                     array.add(this.getFloatValue());
-                    if(this.Instruccions.remove(0) == "]"){ //,
+                    if(this.Instruccions.remove(0).getLexeme() == "]"){ //,
                         break;
                     }
                 }
-                this.hash.put(name, new Simbols.Builder(name, type, 0, 0).setAFvalue(array).build());
+                this.hash.put(name.getLexeme(), new Simbols.Builder(name.getLexeme(), type, name.getLine(), name.getColumn()).setAFvalue(array).build());
                 break;
             case ("CHAR[]"):
                 ArrayList<String> arrayS = new ArrayList<String>();
                 while (true){
-                    String value = this.Instruccions.remove(0); //STRING, ID
+                    String value = this.Instruccions.remove(0).getLexeme(); //STRING, ID
                     if(this.hash.containsKey(value)){
                         value = this.hash.get(value).getSvalue();
                     }
                     arrayS.add(value);
-                    if(this.Instruccions.remove(0) == "]"){ //,
+                    if(this.Instruccions.remove(0).getLexeme() == "]"){ //,
                         break;
                     }
                 }
-                this.hash.put(name, new Simbols.Builder(name, type, 0, 0).setASvalue(arrayS).build());
+                this.hash.put(name.getLexeme(), new Simbols.Builder(name.getLexeme(), type, name.getLine(), name.getColumn()).setASvalue(arrayS).build());
                 break;
         }
         this.Instruccions.remove(0); //END
@@ -356,22 +356,22 @@ public class Interpreter {
     }
 
     public void declareVariable() {
-        String type = this.Instruccions.remove(0); // DOUBLE, CHAR[]
+        String type = this.Instruccions.remove(0).getLexeme(); // DOUBLE, CHAR[]
         this.Instruccions.remove(0); //::
-        String name = this.Instruccions.remove(0);
+        Intruccions name = this.Instruccions.remove(0);
         this.Instruccions.remove(0); // <-
 
         switch (type) {
             case ("DOUBLE"):
                 float num = this.getFloatValue();
-                this.hash.put(name, new Simbols.Builder(name, type, 0, 0).setFvalue(num).build());
+                this.hash.put(name.getLexeme(), new Simbols.Builder(name.getLexeme(), type, name.getLine(), name.getColumn()).setFvalue(num).build());
                 break;
             case ("CHAR[]"):
-                String value = this.Instruccions.remove(0); //STRING, ID
+                String value = this.Instruccions.remove(0).getLexeme(); //STRING, ID
                 if(this.hash.containsKey(value)){
                     value = this.hash.get(value).getSvalue();
                 }
-                this.hash.put(name, new Simbols.Builder(name, type, 0, 0).setSvalue(value).build());
+                this.hash.put(name.getLexeme(), new Simbols.Builder(name.getLexeme(), type, name.getLine(), name.getColumn()).setSvalue(value).build());
                 break;
         }
         this.Instruccions.remove(0); //END
@@ -388,7 +388,7 @@ public class Interpreter {
     }
 
     private float getFloatValue() {
-        String value = this.Instruccions.remove(0); //NUM, ARITFUNC, ID, ESTAFUNC
+        String value = this.Instruccions.remove(0).getLexeme(); //NUM, ARITFUNC, ID, ESTAFUNC
         float num = 0;
         if (ARITFUNC.contains(value)){
             num = this.aritFunctions(value);
@@ -472,7 +472,7 @@ public class Interpreter {
         boolean select = false;
         ArrayList<Float> AFvalue = new ArrayList<>();
         this.Instruccions.remove(0); // (
-        String value = this.Instruccions.remove(0); //NUM, ID, [
+        String value = this.Instruccions.remove(0).getLexeme(); //NUM, ID, [
         if (value != "["){
             select = true;
         }
@@ -486,7 +486,7 @@ public class Interpreter {
         } else{
             while (true){
                 AFvalue.add(this.getFloatValue());
-                if(this.Instruccions.remove(0) == "]"){ //,
+                if(this.Instruccions.remove(0).getLexeme() == "]"){ //,
                     break;
                 }
             }
@@ -540,12 +540,12 @@ public class Interpreter {
     }
 
     public void printConsole(){
-        String value = this.Instruccions.remove(0); // COLUMN, PRINT
+        String value = this.Instruccions.remove(0).getLexeme(); // COLUMN, PRINT
         this.Instruccions.remove(0); // =
         if (value.equals("PRINT")){
             console_text += "\n!SALIDA : ";
             while (true) {
-                String print = this.Instruccions.remove(0); //STRING, ID, NUM
+                String print = this.Instruccions.remove(0).getLexeme(); //STRING, ID, NUM
                 if (this.hash.containsKey(print)) {
                     if (this.hash.get(print).getType().equals("DOUBLE")){
                         console_text += this.hash.get(print).getFvalue();
@@ -573,7 +573,7 @@ public class Interpreter {
             }
         } else if (value.equals("COLUMN")) {
             console_text += "\n----------";
-            String column = this.Instruccions.remove(0); //STRING, ID
+            String column = this.Instruccions.remove(0).getLexeme(); //STRING, ID
             this.Instruccions.remove(0); // ->
             if (this.hash.containsKey(column)){
                 if(this.hash.get(column).getSvalue() != null){
@@ -587,11 +587,11 @@ public class Interpreter {
                 console_text += "\n TITULO NO CONOCIDO " + column;
             }
             console_text += "\n----------";
-            column = this.Instruccions.remove(0); // @ID, [
+            column = this.Instruccions.remove(0).getLexeme(); // @ID, [
 
             if (column.equals("[")){
                 while (true){
-                    column = this.Instruccions.remove(0); //STRING, ID
+                    column = this.Instruccions.remove(0).getLexeme(); //STRING, ID
                     if (this.hash.containsKey(column)){
                         if (this.hash.get(column).getSvalue() != null) {
                             console_text += "\n" + this.hash.get(column).getSvalue();

@@ -425,6 +425,10 @@ public class flexcup implements java_cup.runtime.Scanner {
 
   /* user code: */
     public ArrayList<Token> tokens = new ArrayList<Token>();
+
+    public void addToken(Token token){
+        tokens.add(token);
+    }
     StringBuffer buffer = new StringBuffer();
 
     private Symbol symbol(int type){
@@ -432,10 +436,6 @@ public class flexcup implements java_cup.runtime.Scanner {
     }
     private Symbol symbol(int type, Object value){
         return new Symbol(type, yyline, yycolumn, value);
-    }
-
-    public void addToken(Token token){
-            tokens.add(token);
     }
 
 
