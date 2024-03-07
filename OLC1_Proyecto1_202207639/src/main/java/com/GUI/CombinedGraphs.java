@@ -71,24 +71,6 @@ public class CombinedGraphs {
         return chartPanel;
     }
 
-    public void replacePanel(JFrame frame, JPanel oldPanel, ChartPanel newPanel) {
-        // Guardar las dimensiones y la posición del oldPanel
-        Dimension oldPanelSize = oldPanel.getSize();
-        Point oldPanelLocation = oldPanel.getLocation();
-
-        // Remover el oldPanel y agregar el newPanel
-        frame.getContentPane().remove(oldPanel);
-        frame.getContentPane().add(newPanel);
-
-        // Establecer las dimensiones y la posición del newPanel para que sean las mismas que las del oldPanel
-        newPanel.setPreferredSize(oldPanelSize);
-        newPanel.setLocation(oldPanelLocation);
-
-        frame.pack();
-        frame.revalidate();
-        frame.repaint();
-    }
-
     public ChartPanel createFrequencyBarGraph(String title, ArrayList<Float> numbers) {
         // Calcular la frecuencia de cada número
         Map<Float, Float> frequencyMap = new HashMap<>();

@@ -425,7 +425,6 @@ public class flexcup implements java_cup.runtime.Scanner {
 
   /* user code: */
     public ArrayList<Token> tokens = new ArrayList<Token>();
-
     StringBuffer buffer = new StringBuffer();
 
     private Symbol symbol(int type){
@@ -433,6 +432,10 @@ public class flexcup implements java_cup.runtime.Scanner {
     }
     private Symbol symbol(int type, Object value){
         return new Symbol(type, yyline, yycolumn, value);
+    }
+
+    public void addToken(Token token){
+            tokens.add(token);
     }
 
 
@@ -855,13 +858,14 @@ public class flexcup implements java_cup.runtime.Scanner {
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
             zzDoEOF();
-          {     return symbol(ParserSym.EOF);
+          {     addToken(new Token(tokens.size(),-1, -1, yytext(),"",TokenConstant.EOF));
+    return symbol(ParserSym.EOF);
  }
       }
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.ERROR));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.ERROR));
             }
           // fall through
           case 35: break;
@@ -877,187 +881,187 @@ public class flexcup implements java_cup.runtime.Scanner {
           // fall through
           case 37: break;
           case 4:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"(",TokenConstant.LPAREN));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"(",TokenConstant.LPAREN));
     return symbol (ParserSym.LPAREN, yytext());
             }
           // fall through
           case 38: break;
           case 5:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),")",TokenConstant.RPAREN));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),")",TokenConstant.RPAREN));
     return symbol (ParserSym.RPAREN, yytext());
             }
           // fall through
           case 39: break;
           case 6:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),",",TokenConstant.COMMA));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),",",TokenConstant.COMMA));
     return symbol (ParserSym.COMMA, yytext());
             }
           // fall through
           case 40: break;
           case 7:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.NUM));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.NUM));
     return symbol (ParserSym.NUM, yytext());
             }
           // fall through
           case 41: break;
           case 8:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),":",TokenConstant.COLON));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),":",TokenConstant.COLON));
     return symbol (ParserSym.COLON, yytext());
             }
           // fall through
           case 42: break;
           case 9:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),";",TokenConstant.SEMICOLON));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),";",TokenConstant.SEMICOLON));
     return symbol (ParserSym.SEMICOLON, yytext());
             }
           // fall through
           case 43: break;
           case 10:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"=",TokenConstant.EQUAL));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"=",TokenConstant.EQUAL));
     return symbol (ParserSym.EQUAL, yytext());
             }
           // fall through
           case 44: break;
           case 11:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.ID));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.ID));
     return symbol (ParserSym.ID, yytext());
             }
           // fall through
           case 45: break;
           case 12:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"[",TokenConstant.LBRACKET));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"[",TokenConstant.LBRACKET));
     return symbol (ParserSym.LBRACKET, yytext());
             }
           // fall through
           case 46: break;
           case 13:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"]",TokenConstant.RBRACKET));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"]",TokenConstant.RBRACKET));
     return symbol (ParserSym.RBRACKET, yytext());
             }
           // fall through
           case 47: break;
           case 14:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext().replaceAll("[\"“”]", ""),"\".*\"",TokenConstant.STRING));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext().replaceAll("[\"“”]", ""),"\".*\"",TokenConstant.STRING));
     return symbol (ParserSym.STRING, yytext());
             }
           // fall through
           case 48: break;
           case 15:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"->",TokenConstant.RARROW));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"->",TokenConstant.RARROW));
     return symbol (ParserSym.RARROW, yytext());
             }
           // fall through
           case 49: break;
           case 16:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"::",TokenConstant.DOUBLECOLON));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"::",TokenConstant.DOUBLECOLON));
     return symbol (ParserSym.DOUBLECOLON, yytext());
             }
           // fall through
           case 50: break;
           case 17:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"<-",TokenConstant.LARROW));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"<-",TokenConstant.LARROW));
     return symbol (ParserSym.LARROW, yytext());
             }
           // fall through
           case 51: break;
           case 18:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.ARRAY));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.ARRAY));
     return symbol (ParserSym.ARRAY, yytext());
             }
           // fall through
           case 52: break;
           case 19:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"ARRAY",TokenConstant.ARR));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"ARRAY",TokenConstant.ARR));
     return symbol (ParserSym.ARR, yytext());
             }
           // fall through
           case 53: break;
           case 20:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"",TokenConstant.ARITFUNC));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"",TokenConstant.ARITFUNC));
     return symbol(ParserSym.ARITFUNC, yytext());
             }
           // fall through
           case 54: break;
           case 21:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"END",TokenConstant.END));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"END",TokenConstant.END));
     return symbol (ParserSym.END, yytext());
             }
           // fall through
           case 55: break;
           case 22:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"",TokenConstant.ESTFUNC));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"",TokenConstant.ESTFUNC));
     return symbol(ParserSym.ESTFUNC, yytext());
             }
           // fall through
           case 56: break;
           case 23:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"VAR",TokenConstant.VAR));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"VAR",TokenConstant.VAR));
     return symbol (ParserSym.VAR, yytext());
             }
           // fall through
           case 57: break;
           case 24:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"EJES",TokenConstant.EJES));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"EJES",TokenConstant.EJES));
     return symbol(ParserSym.EJES, yytext());
             }
           // fall through
           case 58: break;
           case 25:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"EXEC",TokenConstant.EXEC));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"EXEC",TokenConstant.EXEC));
     return symbol(ParserSym.EXEC, yytext());
             }
           // fall through
           case 59: break;
           case 26:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"LABEL",TokenConstant.LABEL));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"LABEL",TokenConstant.LABEL));
     return symbol(ParserSym.LABEL, yytext());
             }
           // fall through
           case 60: break;
           case 27:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"PRINT",TokenConstant.PRINT));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"PRINT",TokenConstant.PRINT));
     return symbol(ParserSym.PRINT, yytext());
             }
           // fall through
           case 61: break;
           case 28:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"---",TokenConstant.DATATYPE));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"---",TokenConstant.DATATYPE));
     return symbol (ParserSym.DATATYPE, yytext());
             }
           // fall through
           case 62: break;
           case 29:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"COLUMN",TokenConstant.COLUMN));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"COLUMN",TokenConstant.COLUMN));
     return symbol(ParserSym.COLUMN, yytext());
             }
           // fall through
           case 63: break;
           case 30:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"TITULO",TokenConstant.TITLE));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"TITULO",TokenConstant.TITLE));
     return symbol(ParserSym.TITLE, yytext());
             }
           // fall through
           case 64: break;
           case 31:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"VALUES",TokenConstant.VALUES));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"VALUES",TokenConstant.VALUES));
     return symbol(ParserSym.VALUES, yytext());
             }
           // fall through
           case 65: break;
           case 32:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"CONSOLE",TokenConstant.CONSOLE));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"CONSOLE",TokenConstant.CONSOLE));
     return symbol(ParserSym.CONSOLE, yytext());
             }
           // fall through
           case 66: break;
           case 33:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"PROGRAM",TokenConstant.PROGRAM));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"PROGRAM",TokenConstant.PROGRAM));
     return symbol (ParserSym.PROGRAM, yytext());
             }
           // fall through
           case 67: break;
           case 34:
-            { tokens.add(new Token(tokens.size(),yyline, yycolumn, yytext(),"GRAPHBAR",TokenConstant.GRAPHTYPE));
+            { addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),"GRAPHBAR",TokenConstant.GRAPHTYPE));
     return symbol(ParserSym.GRAPHTYPE, yytext());
             }
           // fall through

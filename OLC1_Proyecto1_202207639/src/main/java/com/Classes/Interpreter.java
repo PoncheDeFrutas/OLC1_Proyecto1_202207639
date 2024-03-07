@@ -152,8 +152,8 @@ public class Interpreter {
             combinedGraphs.addChartPanel(combinedGraphs.createPieGraph(Title, labels, values));
         } else{
             combinedGraphs.addChartPanel(combinedGraphs.createFrequencyBarGraph(Title, values));
+            console_text += createFrequencyTable(values);
         }
-        console_text += createFrequencyTable(values);
         this.Instruccions.remove(0); // END
         this.Instruccions.remove(0); // ;
         this.Instruccions.remove(0); // )
@@ -172,7 +172,7 @@ public class Interpreter {
         StringBuilder table = new StringBuilder();
 
         // Agregar el título de la tabla
-        table.append("Análisis de Arreglo\n");
+        table.append("\nAnálisis de Arreglo\n");
 
         // Agregar los nombres de las columnas
         table.append(String.format("%-10s %-10s %-20s %-20s\n", "Valor", "Frecuencia", "Frecuencia Absoluta", "Frecuencia Relativa"));
@@ -610,6 +610,8 @@ public class Interpreter {
                         console_text += "\nDATOS NO CONOIDOS " + column;
                     }
                 }
+            } else if (column.equals("END")) {
+                this.Instruccions.remove(0); // ;
             } else {
                 if(this.hash.containsKey(column)){
                     if(this.hash.get(column).getAFvalue() != null){
@@ -623,12 +625,9 @@ public class Interpreter {
                     console_text += "\nDATOS NO CONOIDOS " + column;
                 }
             }
-
         } else{
             console_text += "\n DATO NO CONOIDO " + value;
         }
-        this.Instruccions.remove(0); // END
-        this.Instruccions.remove(0); // ;
     }
 
     public void printHash(){
@@ -640,4 +639,6 @@ public class Interpreter {
     public String getConsole_text(){
         return this.console_text;
     }
+
+    public CombinedGraphs getCombinedGraphs(){return  this.combinedGraphs;}
 }

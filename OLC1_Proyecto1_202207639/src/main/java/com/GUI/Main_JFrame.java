@@ -4,14 +4,19 @@ package com.GUI;
 
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.Analyzer.Parser;
+import com.Analyzer.flexcup;
+import com.Classes.Interpreter;
 import com.Classes.Token;
 import com.Classes.TokenConstant;
+import com.Classes.Tree;
 import com.Functions.Reports;
 import com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme;
 import com.Analyzer.LexemeAnalyzer;
@@ -104,7 +109,7 @@ public class Main_JFrame extends javax.swing.JFrame {
                            public void mouseClicked(java.awt.event.MouseEvent evt) {
                                try {
                                    jMenu_RunMouseClicked(evt);
-                               } catch (IOException e) {
+                               } catch (Exception e) {
                                    throw new RuntimeException(e);
                                }
                            }
@@ -155,7 +160,7 @@ public class Main_JFrame extends javax.swing.JFrame {
                   pack();
          }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem_NewFileMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem_NewFileMouseReleased
+    private void jMenuItem_NewFileMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         JFileChooser CreatenewFile = new JFileChooser();
 
@@ -193,7 +198,7 @@ public class Main_JFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem_NewFileMouseReleased
 
-    private void jMenuItem_OpenFileMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem_OpenFileMouseReleased
+    private void jMenuItem_OpenFileMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         JFileChooser openFile = new JFileChooser();
 
@@ -227,12 +232,12 @@ public class Main_JFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem_OpenFileMouseReleased
 
-    private void jMenuItem_CloseFileMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem_CloseFileMouseReleased
+    private void jMenuItem_CloseFileMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         jTabbedPane1.removeTabAt(jTabbedPane1.getSelectedIndex());
     }//GEN-LAST:event_jMenuItem_CloseFileMouseReleased
 
-    private void jMenuItem_SaveFileMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem_SaveFileMouseReleased
+    private void jMenuItem_SaveFileMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         Base_JPanel base_JPanel = (Base_JPanel) jTabbedPane1.getSelectedComponent();
 
@@ -245,7 +250,7 @@ public class Main_JFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem_SaveFileMouseReleased
 
-    private void jMenuItem_TokensReportMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem_TokensReportMouseReleased
+    private void jMenuItem_TokensReportMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         File file = new File("TablaTokens.html");
         try {
@@ -262,28 +267,35 @@ public class Main_JFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem_TokensReportMouseReleased
 
-    private void jMenu_RunMouseClicked(java.awt.event.MouseEvent evt) throws IOException {//GEN-FIRST:event_jMenu_RunMouseClicked
+    private void jMenu_RunMouseClicked(java.awt.event.MouseEvent evt) throws Exception {
 
         // TODO add your handling code here:
         Base_JPanel base_JPanel = (Base_JPanel) jTabbedPane1.getSelectedComponent();
+        base_JPanel.setConsoleText("Analizando los analisis analizados");
+
         Reader stringReader = new StringReader(base_JPanel.returnTextAreaCode().toUpperCase());
-        LexemeAnalyzer lexemeAnalyzer = new LexemeAnalyzer(stringReader);
-        Token token = lexemeAnalyzer.next_token();
-        while (token.getLexeme() != null) {
-            if (token.getTokenType() != TokenConstant.ERROR) {
-                System.out.println(token);
-            } else {
-                System.out.println("\033[0;31m" + token + "\033[0m");
-            }
-            token = lexemeAnalyzer.next_token();
-        }
+        flexcup lexemeAnalyzer = new flexcup(stringReader);
+        Parser parser = new Parser(lexemeAnalyzer);
+
+        Tree tree = (Tree) parser.parse().value;
+        tree.saveTree(tree);
+        tree.printInstruccions();
+
         Reports reports = new Reports();
-        ;
+
+        Interpreter interpreter = new Interpreter(tree);
+        interpreter.run();
+
+        String textomamalon = interpreter.getConsole_text();
+
+        base_JPanel.setConsoleText(textomamalon);
+
+        base_JPanel.setGraphs(interpreter.getCombinedGraphs());
         reports.tokensReport(lexemeAnalyzer.tokens);
         reports.errorsReport();
     }//GEN-LAST:event_jMenu_RunMouseClicked
 
-    private void jMenuItem2_ErrorsReportMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2_ErrorsReportMouseReleased
+    private void jMenuItem2_ErrorsReportMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         File file = new File("TablaErrores.html");
         try {
