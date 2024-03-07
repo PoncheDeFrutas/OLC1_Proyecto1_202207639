@@ -293,7 +293,7 @@ public class Main_JFrame extends javax.swing.JFrame {
         base_JPanel.setGraphs(interpreter.getCombinedGraphs());
         reports.tokensReport(lexemeAnalyzer.tokens);
         reports.simbolTable(interpreter.getHash());
-        reports.errorsReport();
+        reports.errorsReport(parser.TablaES);
     }//GEN-LAST:event_jMenu_RunMouseClicked
 
     private void jMenuItem2_ErrorsReportMouseReleased(java.awt.event.MouseEvent evt) {

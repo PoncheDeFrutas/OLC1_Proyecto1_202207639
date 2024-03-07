@@ -56,7 +56,7 @@ public class Reports {
 
     }
 
-    public boolean errorsReport() {
+    public boolean errorsReport(ArrayList<Error> tablaES) {
         StringBuilder html = new StringBuilder();
         html.append("<table style='border-collapse: collapse; width: 100%; text-align: center;'>");
 
@@ -71,6 +71,15 @@ public class Reports {
 
         for (Error error : errors) {
             html.append("<tr>");
+            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getId()).append("</td>");
+            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getLine()).append("</td>");
+            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getColumn()).append("</td>");
+            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getCharacter()).append("</td>");
+            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getErrorType()).append("</td>");
+            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getDescription()).append("</td>");
+        }
+
+        for (Error error : tablaES) {
             html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getId()).append("</td>");
             html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getLine()).append("</td>");
             html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getColumn()).append("</td>");

@@ -7,6 +7,8 @@ package com.Analyzer;
 
 import java_cup.runtime.*;
 import com.Classes.Tree;
+import com.Classes.Error;
+import java.util.ArrayList;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -232,14 +234,37 @@ public class Parser extends java_cup.runtime.lr_parser {
 
 
 
+    public String resultado="";
+    public ArrayList<Error> TablaES = new ArrayList<Error>();
+    //Metodo al que se llama automaticamente ante algun error sintactico
+    public void syntax_error(Symbol s){
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
 
-public void syntax_error(Symbol s){
-	System.out.println("Sintax error: " +s.value + " en la línea " + s.right+ " en la columna " + s.left);
-}
+        System.out.println("!!!!!!! Error Sintactico Recuperado !!!!!!!");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+        //Error(int id, int line, int column, String character, String errorType, String description)
+        Error datos = new Error(TablaES.size()+1, fila, columna, lexema, "Error Sintactico", "Caracter no esperado");
+        TablaES.add(datos);
+    }
 
-public void unrecovered_syntax_error(Symbol s)throws java.lang.Exception{
-	System.out.println("Sintax error: " +s.value + " en la línea " + s.right+" en la columna " + s.left);
-}
+    //Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+
+        System.out.println("!!!!!!! Error Sintactico, Panic Mode !!!!!!! ");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+        Error datos = new Error(TablaES.size()+1, fila, columna, lexema, "Error Sintactico", "Caracter no esperado");
+        TablaES.add(datos);
+    }
 
 
 /** Cup generated class to encapsulate user supplied action code.*/
