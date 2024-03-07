@@ -38,18 +38,18 @@ public class Interpreter {
                     break;
                 case("GRAPHBAR"):
                     this.Instruccions.remove(0); // (
-                    this.graphGraphBL();
+                    this.graphGraphBL("GRAPHBAR");
                     break;
                 case("GRAPHLINE"):
                     this.Instruccions.remove(0); // (
-                    this.graphGraphBL();
+                    this.graphGraphBL("GRAPHLINE");
                     break;
                 case("GRAPHPIE"):
                     this.Instruccions.remove(0); // (
-                    this.graphPH();
+                    this.graphPH("GRAPHPIE");
                     break;
                 case("HISTOGRAM"):
-                    this.graphPH();
+                    this.graphPH("HISTOGRAM");
                     this.Instruccions.remove(0); // (
                     break;
             }
@@ -57,7 +57,7 @@ public class Interpreter {
 
     }
 
-    public void graphPH(){
+    public void graphPH(String graph){
         String Title = "No Hay titulo";
         ArrayList<String> labels = new ArrayList<>();
         ArrayList<Float> values = new ArrayList<>();
@@ -148,7 +148,7 @@ public class Interpreter {
                 break;
             }
         }
-        if(this.Instruccions.remove(0).getLexeme().equals("GRAPHPIE")){
+        if(graph.equals("GRAPHPIE")){
             combinedGraphs.addChartPanel(combinedGraphs.createPieGraph(Title, labels, values));
         } else{
             combinedGraphs.addChartPanel(combinedGraphs.createFrequencyBarGraph(Title, values));
@@ -202,7 +202,7 @@ public class Interpreter {
         return table.toString();
     }
 
-    public void graphGraphBL(){
+    public void graphGraphBL(String graph){
         String Title = "No Hay titulo";
         String tituloX = "No Hay titulo";
         String tituloY = "No Hay titulo";
@@ -307,7 +307,7 @@ public class Interpreter {
             } else if(data.equals("EXEC")){break;}
         }
 
-        if (this.Instruccions.remove(0).getLexeme().equals("GRAPHBAR")) {
+        if (graph.equals("GRAPHBAR")) {
             combinedGraphs.addChartPanel(combinedGraphs.createBarGraph(Title, ejeX, ejeY, tituloX, tituloY));
         } else{
             combinedGraphs.addChartPanel(combinedGraphs.createLineGraph(Title, ejeX, ejeY, tituloX, tituloY));

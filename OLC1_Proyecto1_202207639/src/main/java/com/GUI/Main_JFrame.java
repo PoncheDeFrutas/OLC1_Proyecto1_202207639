@@ -294,6 +294,8 @@ public class Main_JFrame extends javax.swing.JFrame {
         reports.tokensReport(lexemeAnalyzer.tokens);
         reports.simbolTable(interpreter.getHash());
         reports.errorsReport(parser.TablaES);
+
+        base_JPanel.graphGraph();
     }//GEN-LAST:event_jMenu_RunMouseClicked
 
     private void jMenuItem2_ErrorsReportMouseReleased(java.awt.event.MouseEvent evt) {

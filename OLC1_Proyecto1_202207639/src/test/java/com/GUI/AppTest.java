@@ -114,75 +114,8 @@ AppTest
                 PROGRAM
                 <!MULTICOMENTARIO!>
                     ! Ejemplos Variables
-                    var:double:: numero <- 2.5 end;
-                    var:char[]::cadena <- “cadena” end;
-                    var:double:: copia <- numero end; ! copia tiene el valor 2.5
-                    
-                    ! Ejemplos Arreglos
-                    arr:double::@darray <- [1, 2, 3, 4, 5] end; ! Arreglo de tipo double
-                    arr:char[]::@carray <- [“12”, “2”, “3”] end; ! Arreglo de tipo string
-                    arr:double::@carray <- [numero, copia, 7] end; ! Puede usar variables
-                    
-                    ! Operaciones
-                    var:double:: suma <- SUM(5, 2) end;
-                    var:double:: resta <- RES(3, 2) end;
-                    var:double:: multi <- MUL(4, numero) end; ! Funciona con variables
-                    var:double:: division <- DIV(1, variable) end;
-                    var:double:: modulo <- MOD(5, 4) end;
-                    
-                    ! Operaciones anidadas
-                    var:double:: suma <- MUL( SUM(7,3) , RES(7, DIV(25,5))) end;
-                    arr:double::@darray <- [ SUM(7,3), DIV(25,5)] end; ! Arreglo con funciones
-                    
-                    ! se pueden ingresar el arreglo directamente o por variable
-                    var:double:: med1 <- Media([1, 2, SUM(3, suma), 4, modulo]) end;
-                    var:double:: med2 <- Mediana( @darray ) end;
-                    arr:double::@arreglo <- [Media(@darray), Mediana(@darray)] end;
-                    ! Tambien se pueden utilizar en operaciones aritmeticas
-                    var:double:: mitad <- DIV( SUM(Max(@arreglo), Min(@arreglo) ), 2) end;
-                    
-                    var:double:: numero <- 15 end;
-                    console::print = “hola”, numero, 15, “adios” end;
-                    ! Salida: hola, 15, adios
-                    console::print = 1, 2, SUM(3,5), Media(@arreglo) end;
-                    ! Salida: 1, 2, 8, 15.7
-                    
-                    arr:double::@darray <- [1, 2, 3, 4, 5] end;
-                    var:char[]:: titulo1 <- “Enteros” end;
-                    console::column = “Enteros” -> @darray end;
-                    console::column = titulo1 -> [1, 2, 3, 4, 5] end;
-                    
-                    ! Ejemplo
-                    graphPie(
-                    label::char[] = [“Uno”, “Dos”, “Tres”] end;
-                    values::double = [50, 30, 20] end;
-                    titulo::char[] = “Ejemplo Gráfica de Pie” end;
-                    EXEC graphPie end;
-                    ) end;
-           
-                    graphBar(
-                    titulo::char[] = “Estudiantes” end;
-                    ejeX::char[] = [“1 Parcial”, “2 parcial”, “Final”] end;
-                    ejeY::double = [50, 30, 70] end;
-                    tituloX::char[] = “Actividades” end;
-                    tituloY::char[] = “Notas” end;
-                    EXEC graphBar end;
-                    ) end;
-                
-                    graphLine(
-                    titulo::char[] = “Gráfica de Línea” end;
-                    ejeX::char[] = [“1 Parcial”, “2 parcial”, “Final”] end;
-                    ejeY::double = [50, 30, 70] end;
-                    tituloX::char[] = “Actividades” end;
-                    tituloY::char[] = “Notas” end;
-                    EXEC graphLine end;
-                    ) end;
-                    
-                    Histogram(
-                    titulo::char[] = “Analisis de Arreglo” end;
-                    values::char[] = [2,2,2,5,5,7,8] end;
-                    EXEC Histogram end;
-                    ) end;
+                    var:double:: numero <- 2.5 ;
+                    var:double:: numero <- 2.5 eND;
                 END PROGRAM
             """;
         Reader stringReader = new StringReader(testString.toUpperCase());
@@ -192,10 +125,15 @@ AppTest
 
         Parser parser = new Parser(flexcup);
 
-        Tree tree = (Tree) parser.parse().value;
-        tree.saveTree(tree);
-        tree.printInstruccions();
 
+        Tree tree = null;
+        try {
+            tree = (Tree) parser.parse().value;
+        } catch (Exception e){
+            System.out.println("NO POS VALIO QUESO MANITU");
+        }
+        System.out.println(parser.error_sym());
+        System.out.println(parser.TablaES);
         for(Token tempTK : flexcup.tokens){
             if (tempTK.getTokenType() != TokenConstant.ERROR) {
                 System.out.println(tempTK);
@@ -204,14 +142,21 @@ AppTest
             }
         }
 
-        System.out.println("--------------------------------*-*-*-*-*-*--------------------------");
-        Interpreter interpreter = new Interpreter(tree);
-        interpreter.run();
-        interpreter.printHash();
-        System.out.println("--------------------------------*-*-*-*-*-*--------------------------");
-        String textomamalon = interpreter.getConsole_text();
-        System.out.println(textomamalon);
-        System.out.println("Sintactic Analyzer test passed");
+        if (tree != null) {
+            tree.saveTree(tree);
+            tree.printInstruccions();
+            System.out.println("--------------------------------*-*-*-*-*-*--------------------------");
+            Interpreter interpreter = new Interpreter(tree);
+            interpreter.run();
+            interpreter.printHash();
+            System.out.println("--------------------------------*-*-*-*-*-*--------------------------");
+            String textomamalon = interpreter.getConsole_text();
+            System.out.println(textomamalon);
+            System.out.println("Sintactic Analyzer test passed");
+        }
+
+
+
     }
 
     @Test

@@ -238,7 +238,10 @@ public class Parser extends java_cup.runtime.lr_parser {
     public ArrayList<Error> TablaES = new ArrayList<Error>();
     //Metodo al que se llama automaticamente ante algun error sintactico
     public void syntax_error(Symbol s){
-        String lexema = s.value.toString();
+        String lexema = "NULL";
+        if (s.value != null){
+            lexema = s.value.toString();
+        }
         int fila = s.right;
         int columna = s.left;
 
@@ -247,13 +250,16 @@ public class Parser extends java_cup.runtime.lr_parser {
         System.out.println("\t\tFila: "+fila);
         System.out.println("\t\tColumna: "+columna);
         //Error(int id, int line, int column, String character, String errorType, String description)
-        Error datos = new Error(TablaES.size()+1, fila, columna, lexema, "Error Sintactico", "Caracter no esperado");
+        Error datos = new Error(TablaES.size()+1, columna, fila, lexema, "Error Sintactico", "Caracter no esperado");
         TablaES.add(datos);
     }
 
     //Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
-        String lexema = s.value.toString();
+        String lexema = "NULL";
+        if (s.value != null){
+            lexema = s.value.toString();
+        }
         int fila = s.right;
         int columna = s.left;
 
@@ -262,7 +268,7 @@ public class Parser extends java_cup.runtime.lr_parser {
         System.out.println("\t\tFila: "+fila);
         System.out.println("\t\tColumna: "+columna);
 
-        Error datos = new Error(TablaES.size()+1, fila, columna, lexema, "Error Sintactico", "Caracter no esperado");
+        Error datos = new Error(TablaES.size()+1, columna, fila, lexema, "Error Sintactico", "Caracter no esperado");
         TablaES.add(datos);
     }
 
@@ -315,7 +321,11 @@ class CUP$Parser$actions {
 		
     Tree SP = new Tree("SP", -1, -1);
     SP.addChild(new Tree("PROGRAM", -1, -1));
-    SP.addChild(st);
+    try {
+        SP.addChild(st);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     SP.addChild(new Tree("END", -1, -1));
     SP.addChild(new Tree("PROGRAM", -1, -1));
     RESULT = SP;
@@ -336,8 +346,16 @@ class CUP$Parser$actions {
 		Tree td = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree ST = new Tree("ST", -1, -1);
-    ST.addChild(st);
-    ST.addChild(td);
+    try {
+        ST.addChild(st);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    try {
+        ST.addChild(td);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = ST;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("statments",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -353,7 +371,11 @@ class CUP$Parser$actions {
 		Tree td = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree ST = new Tree("ST", -1, -1);
-    ST.addChild(td);
+    try {
+        ST.addChild(td);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = ST;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("statments",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -369,7 +391,11 @@ class CUP$Parser$actions {
 		Tree d = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree TD = new Tree("TD", -1, -1);
-    TD.addChild(d);
+    try {
+        TD.addChild(d);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = TD;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("type_declaration",17, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -385,7 +411,11 @@ class CUP$Parser$actions {
 		Tree es = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree TD = new Tree("TD", -1, -1);
-    TD.addChild(es);
+    try {
+        TD.addChild(es);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = TD;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("type_declaration",17, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -401,7 +431,11 @@ class CUP$Parser$actions {
 		Tree cs = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree TD = new Tree("TD", -1, -1);
-    TD.addChild(cs);
+    try {
+        TD.addChild(cs);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = TD;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("type_declaration",17, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -417,7 +451,11 @@ class CUP$Parser$actions {
 		Tree gs = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree TD = new Tree("TD", -1, -1);
-    TD.addChild(gs);
+    try {
+        TD.addChild(gs);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = TD;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("type_declaration",17, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -433,7 +471,11 @@ class CUP$Parser$actions {
 		Tree vd = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree D = new Tree("D", -1, -1);
-    D.addChild(vd);
+    try {
+        D.addChild(vd);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = D;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("declaration",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -449,7 +491,11 @@ class CUP$Parser$actions {
 		Tree ad = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree D = new Tree("D", -1, -1);
-    D.addChild(ad);
+    try {
+        D.addChild(ad);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = D;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("declaration",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -477,7 +523,11 @@ class CUP$Parser$actions {
     VD.addChild(new Tree("::", -1, -1));
     VD.addChild(new Tree(id.toString(), idleft, idright));
     VD.addChild(new Tree("<-", -1, -1));
-    VD.addChild(ex);
+    try {
+        VD.addChild(ex);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     VD.addChild(new Tree("END", -1, -1));
     VD.addChild(new Tree(";", -1, -1));
     RESULT = VD;
@@ -507,7 +557,11 @@ class CUP$Parser$actions {
     AD.addChild(new Tree("::", -1, -1));
     AD.addChild(new Tree(ar.toString(), arleft, arright));
     AD.addChild(new Tree("<-", -1, -1));
-    AD.addChild(av);
+    try {
+        AD.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     AD.addChild(new Tree("END", -1, -1));
     AD.addChild(new Tree(";", -1, -1));
     RESULT = AD;
@@ -526,7 +580,11 @@ class CUP$Parser$actions {
 		
     Tree AV = new Tree("AV", -1, -1);
     AV.addChild(new Tree("[", -1, -1));
-    AV.addChild(exl);
+    try {
+        AV.addChild(exl);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     AV.addChild(new Tree("]", -1, -1));
     RESULT = AV;
     
@@ -571,9 +629,17 @@ class CUP$Parser$actions {
 		Tree ex = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree EXL = new Tree("EXL", -1, -1);
-    EXL.addChild(exl);
+    try {
+        EXL.addChild(exl);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     EXL.addChild(new Tree(",", -1, -1));
-    EXL.addChild(ex);
+    try {
+        EXL.addChild(ex);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = EXL;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression_list",9, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -589,7 +655,11 @@ class CUP$Parser$actions {
 		Tree ex = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree EXL = new Tree("EXL", -1, -1);
-    EXL.addChild(ex);
+    try {
+        EXL.addChild(ex);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = EXL;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression_list",9, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -605,7 +675,11 @@ class CUP$Parser$actions {
 		Tree fc = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree EXS = new Tree("EXS", -1, -1);
-    EXS.addChild(fc);
+    try {
+        EXS.addChild(fc);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = EXS;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression_statement",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -626,7 +700,11 @@ class CUP$Parser$actions {
     Tree FC = new Tree("FC", -1, -1);
     FC.addChild(new Tree(ef.toString(), efleft, efright));
     FC.addChild(new Tree("(", -1, -1));
-    FC.addChild(av);
+    try {
+        FC.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     FC.addChild(new Tree(")", -1, -1));
     RESULT = FC;
     
@@ -651,9 +729,17 @@ class CUP$Parser$actions {
     Tree FC = new Tree("FC", -1, -1);
     FC.addChild(new Tree(af.toString(), afleft, afright));
     FC.addChild(new Tree("(", -1, -1));
-    FC.addChild(ex1);
+    try {
+        FC.addChild(ex1);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     FC.addChild(new Tree(",", -1, -1));
-    FC.addChild(ex2);
+    try {
+        FC.addChild(ex2);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     FC.addChild(new Tree(")", -1, -1));
     RESULT = FC;
     
@@ -672,7 +758,11 @@ class CUP$Parser$actions {
     Tree CS = new Tree("CS", -1, -1);
     CS.addChild(new Tree("CONSOLE", -1, -1));
     CS.addChild(new Tree("::", -1, -1));
-    CS.addChild(ps);
+    try {
+        CS.addChild(ps);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = CS;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("console_statement",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -690,7 +780,11 @@ class CUP$Parser$actions {
     Tree PS = new Tree("PS", -1, -1);
     PS.addChild(new Tree("PRINT", -1, -1));
     PS.addChild(new Tree("=", -1, -1));
-    PS.addChild(exl);
+    try {
+        PS.addChild(exl);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     PS.addChild(new Tree("END", -1, -1));
     PS.addChild(new Tree(";", -1, -1));
     RESULT = PS;
@@ -713,9 +807,17 @@ class CUP$Parser$actions {
     Tree PS = new Tree("PS", -1, -1);
     PS.addChild(new Tree("COLUMN", -1, -1));
     PS.addChild(new Tree("=", -1, -1));
-    PS.addChild(exc);
+    try {
+        PS.addChild(exc);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     PS.addChild(new Tree("->", -1, -1));
-    PS.addChild(av);
+    try {
+        PS.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     PS.addChild(new Tree("END", -1, -1));
     PS.addChild(new Tree(";", -1, -1));
     RESULT = PS;
@@ -738,7 +840,11 @@ class CUP$Parser$actions {
     Tree GS = new Tree("GS", -1, -1);
     GS.addChild(new Tree(gt.toString(), gtleft, gtright));
     GS.addChild(new Tree("(", -1, -1));
-    GS.addChild(gp);
+    try {
+        GS.addChild(gp);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     GS.addChild(new Tree(")", -1, -1));
     GS.addChild(new Tree("END", -1, -1));
     GS.addChild(new Tree(";", -1, -1));
@@ -760,7 +866,11 @@ class CUP$Parser$actions {
 		Object gt = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
     Tree GP = new Tree("GP", -1, -1);
-    GP.addChild(pl);
+    try {
+        GP.addChild(pl);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     GP.addChild(new Tree("EXEC", -1, -1));
     GP.addChild(new Tree(gt.toString(), gtleft, gtright));
     GP.addChild(new Tree("END", -1, -1));
@@ -783,8 +893,16 @@ class CUP$Parser$actions {
 		Tree p = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree PL = new Tree("PL", -1, -1);
-    PL.addChild(pl);
-    PL.addChild(p);
+    try {
+        PL.addChild(pl);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    try {
+        PL.addChild(p);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = PL;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter_list",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -800,7 +918,11 @@ class CUP$Parser$actions {
 		Tree p = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree PL = new Tree("PL", -1, -1);
-    PL.addChild(p);
+    try {
+        PL.addChild(p);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = PL;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter_list",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -826,7 +948,11 @@ class CUP$Parser$actions {
     P.addChild(new Tree("::", -1, -1));
     P.addChild(new Tree(dt.toString(), dtleft, dtright));
     P.addChild(new Tree("=", -1, -1));
-    P.addChild(exc);
+    try {
+        P.addChild(exc);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     P.addChild(new Tree("END", -1, -1));
     P.addChild(new Tree(";", -1, -1));
     RESULT = P;
@@ -839,9 +965,9 @@ class CUP$Parser$actions {
           case 28: // parameter ::= EJES DOUBLECOLON DATATYPE EQUAL array_values END SEMICOLON 
             {
               Tree RESULT =null;
-		int eleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).left;
-		int eright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).right;
-		Object e = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-6)).value;
+		int ejleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).left;
+		int ejright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).right;
+		Object ej = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-6)).value;
 		int dtleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
 		int dtright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
 		Object dt = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
@@ -850,11 +976,15 @@ class CUP$Parser$actions {
 		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
     Tree P = new Tree("P", -1, -1);
-    P.addChild(new Tree(e.toString(), eleft, eright));
+    P.addChild(new Tree(ej.toString(), ejleft, ejright));
     P.addChild(new Tree("::", -1, -1));
     P.addChild(new Tree(dt.toString(), dtleft, dtright));
     P.addChild(new Tree("=", -1, -1));
-    P.addChild(av);
+    try {
+        P.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     P.addChild(new Tree("END", -1, -1));
     P.addChild(new Tree(";", -1, -1));
     RESULT = P;
@@ -879,7 +1009,11 @@ class CUP$Parser$actions {
     P.addChild(new Tree("::", -1, -1));
     P.addChild(new Tree(dt.toString(), dtleft, dtright));
     P.addChild(new Tree("=", -1, -1));
-    P.addChild(av);
+    try {
+        P.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     P.addChild(new Tree("END", -1, -1));
     P.addChild(new Tree(";", -1, -1));
     RESULT = P;
@@ -907,7 +1041,11 @@ class CUP$Parser$actions {
     P.addChild(new Tree("::", -1, -1));
     P.addChild(new Tree(dt.toString(), dtleft, dtright));
     P.addChild(new Tree("=", -1, -1));
-    P.addChild(av);
+    try {
+        P.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     P.addChild(new Tree("END", -1, -1));
     P.addChild(new Tree(";", -1, -1));
     RESULT = P;
@@ -934,7 +1072,11 @@ class CUP$Parser$actions {
 		Tree fc = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
     Tree EX = new Tree("EX", -1, -1);
-    EX.addChild(fc);
+    try {
+        EX.addChild(fc);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
     RESULT = EX;
     
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);

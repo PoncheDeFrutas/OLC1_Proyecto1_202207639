@@ -12,7 +12,7 @@ public class Tree {
     private ArrayList<Intruccions> Instruccions = new ArrayList<Intruccions>();
 
     private List<String> Ignore = Arrays.asList("SP", "ST", "TD", "D", "VD", "AD", "AV", "EXL", "EXS", "FC",
-            "CD", "PS", "GS", "GP", "PL", "P", "EX", "EXC", "CS");
+            "CD", "PS", "GS", "GP", "PL", "P", "EX", "EXC", "CS", "ERR");
 
     public Tree(String lexeme, int line, int column){
         this.lexeme = lexeme;
@@ -33,12 +33,14 @@ public class Tree {
     }
 
     public void saveTree(Tree seed){
+        if (seed.children.contains(null)) {
+            return;
+        }
         for (Tree child : seed.children){
             this.saveTree(child);
         }
         if (!Ignore.contains(seed.lexeme)) {
             Instruccions.add(new Intruccions(seed.line, seed.column, seed.lexeme));
-
         }
     }
 
@@ -53,4 +55,6 @@ public class Tree {
             System.out.println(instruccion.getLexeme() + " " + instruccion.getLine() + " " + instruccion.getColumn());
         }
     }
+
+
 }
