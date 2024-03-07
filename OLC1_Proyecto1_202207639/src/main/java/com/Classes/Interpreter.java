@@ -641,4 +641,8 @@ public class Interpreter {
     }
 
     public CombinedGraphs getCombinedGraphs(){return  this.combinedGraphs;}
+
+    public HashMap<String, Simbols> getHash() {
+        return hash;
+    }
 }

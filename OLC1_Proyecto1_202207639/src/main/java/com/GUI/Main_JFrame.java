@@ -292,6 +292,7 @@ public class Main_JFrame extends javax.swing.JFrame {
 
         base_JPanel.setGraphs(interpreter.getCombinedGraphs());
         reports.tokensReport(lexemeAnalyzer.tokens);
+        reports.simbolTable(interpreter.getHash());
         reports.errorsReport();
     }//GEN-LAST:event_jMenu_RunMouseClicked
 
@@ -314,6 +315,19 @@ public class Main_JFrame extends javax.swing.JFrame {
 
     private void jMenuItem3_SymbolTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3_SymbolTableMouseReleased
         // TODO add your handling code here:
+        File file = new File("TablaSimbolos.html");
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                if (file.exists()) {
+                    desktop.open(file);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se ha generado el reporte de simbolos", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }//GEN-LAST:event_jMenuItem3_SymbolTableMouseReleased
 
     /**
