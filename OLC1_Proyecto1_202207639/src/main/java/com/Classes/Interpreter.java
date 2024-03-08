@@ -238,6 +238,7 @@ public class Interpreter {
                         break;
                 }
             } else if (data.equals("EJEX")) {
+                ejeX = new ArrayList<>();
                 this.Instruccions.remove(0); //::
                 this.Instruccions.remove(0); // char[]
                 this.Instruccions.remove(0); // =
@@ -275,6 +276,7 @@ public class Interpreter {
                 this.Instruccions.remove(0); // ;
 
             } else if (data.equals("EJEY")) {
+                ejeY = new ArrayList<>();
                 this.Instruccions.remove(0); //::
                 this.Instruccions.remove(0); // double
                 this.Instruccions.remove(0); // =
@@ -308,9 +310,9 @@ public class Interpreter {
         }
 
         if (graph.equals("GRAPHBAR")) {
-            combinedGraphs.addChartPanel(combinedGraphs.createBarGraph(Title, ejeX, ejeY, tituloX, tituloY));
+            this.combinedGraphs.addChartPanel(combinedGraphs.createBarGraph(Title, ejeX, ejeY, tituloX, tituloY));
         } else{
-            combinedGraphs.addChartPanel(combinedGraphs.createLineGraph(Title, ejeX, ejeY, tituloX, tituloY));
+            this.combinedGraphs.addChartPanel(combinedGraphs.createLineGraph(Title, ejeX, ejeY, tituloX, tituloY));
         }
         this.Instruccions.remove(0); // END
         this.Instruccions.remove(0); // ;
@@ -606,12 +608,10 @@ public class Interpreter {
                         continue;
                     } else if (column.equals("]")) {
                         break;
-                    } else {
+                    }  else {
                         console_text += "\nDATOS NO CONOIDOS " + column;
                     }
                 }
-            } else if (column.equals("END")) {
-                this.Instruccions.remove(0); // ;
             } else {
                 if(this.hash.containsKey(column)){
                     if(this.hash.get(column).getAFvalue() != null){
@@ -625,6 +625,9 @@ public class Interpreter {
                     console_text += "\nDATOS NO CONOIDOS " + column;
                 }
             }
+
+            this.Instruccions.remove(0); //END
+            this.Instruccions.remove(0); //;
         } else{
             console_text += "\n DATO NO CONOIDO " + value;
         }

@@ -236,6 +236,12 @@ public class Parser extends java_cup.runtime.lr_parser {
 
     public String resultado="";
     public ArrayList<Error> TablaES = new ArrayList<Error>();
+
+    public void addError(int columna, int fila, String lexema){
+        Error datos = new Error(TablaES.size(), columna, fila, lexema, "Error Sintactico", "Caracter no Esperado");
+        TablaES.add(datos);
+    }
+
     //Metodo al que se llama automaticamente ante algun error sintactico
     public void syntax_error(Symbol s){
         String lexema = "NULL";
@@ -249,7 +255,6 @@ public class Parser extends java_cup.runtime.lr_parser {
         System.out.println("\t\tLexema: "+lexema);
         System.out.println("\t\tFila: "+fila);
         System.out.println("\t\tColumna: "+columna);
-        //Error(int id, int line, int column, String character, String errorType, String description)
         Error datos = new Error(TablaES.size()+1, columna, fila, lexema, "Error Sintactico", "Caracter no esperado");
         TablaES.add(datos);
     }
@@ -943,6 +948,10 @@ class CUP$Parser$actions {
 		int excright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree exc = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
+    if(dt.toString().equals("DOUBLE")){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
     Tree P = new Tree("P", -1, -1);
     P.addChild(new Tree(t.toString(), tleft, tright));
     P.addChild(new Tree("::", -1, -1));
@@ -975,6 +984,10 @@ class CUP$Parser$actions {
 		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
+    if((dt.toString().equals("CHAR[]") && ej.toString().equals("EJEY")) || (dt.toString().equals("DOUBLE") && ej.toString().equals("EJEX"))){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
     Tree P = new Tree("P", -1, -1);
     P.addChild(new Tree(ej.toString(), ejleft, ejright));
     P.addChild(new Tree("::", -1, -1));
@@ -1004,6 +1017,10 @@ class CUP$Parser$actions {
 		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
+    if(dt.toString().equals("CHAR[]")){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
     Tree P = new Tree("P", -1, -1);
     P.addChild(new Tree("VALUES", -1, -1));
     P.addChild(new Tree("::", -1, -1));
@@ -1036,6 +1053,10 @@ class CUP$Parser$actions {
 		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		
+    if(dt.toString().equals("DOUBLE")){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
     Tree P = new Tree("P", -1, -1);
     P.addChild(new Tree(l.toString(), lleft, lright));
     P.addChild(new Tree("::", -1, -1));

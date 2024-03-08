@@ -4,7 +4,6 @@ package com.GUI;
 
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JFileChooser;
@@ -13,13 +12,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.Analyzer.Parser;
 import com.Analyzer.flexcup;
+import com.Classes.Error;
 import com.Classes.Interpreter;
-import com.Classes.Token;
-import com.Classes.TokenConstant;
 import com.Classes.Tree;
 import com.Functions.Reports;
 import com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme;
-import com.Analyzer.LexemeAnalyzer;
 
 /**
  * @author ponche
@@ -270,6 +267,7 @@ public class Main_JFrame extends javax.swing.JFrame {
     private void jMenu_RunMouseClicked(java.awt.event.MouseEvent evt) throws Exception {
 
         // TODO add your handling code here:
+        String textomamalon = "";
         Base_JPanel base_JPanel = (Base_JPanel) jTabbedPane1.getSelectedComponent();
         base_JPanel.setConsoleText("Analizando los analisis analizados");
 
@@ -277,25 +275,37 @@ public class Main_JFrame extends javax.swing.JFrame {
         flexcup lexemeAnalyzer = new flexcup(stringReader);
         Parser parser = new Parser(lexemeAnalyzer);
 
-        Tree tree = (Tree) parser.parse().value;
-        tree.saveTree(tree);
-        tree.printInstruccions();
+        Tree tree = null;
+
+        try{
+            tree = (Tree) parser.parse().value;
+        } catch (Exception e){
+            textomamalon = "ERROR AL OBTENER LAS INSTRUCCIONES";
+        }
 
         Reports reports = new Reports();
+        reports.tokensReport(lexemeAnalyzer.tokens);
+        reports.errorsReport(parser.TablaES);
 
-        Interpreter interpreter = new Interpreter(tree);
-        interpreter.run();
+        if (tree != null && parser.TablaES.size() == 0){
+            tree.saveTree(tree);
 
-        String textomamalon = interpreter.getConsole_text();
+            Interpreter interpreter = new Interpreter(tree);
+            interpreter.run();
+
+
+            reports.simbolTable(interpreter.getHash());
+            textomamalon = interpreter.getConsole_text();
+            base_JPanel.setGraphs(interpreter.getCombinedGraphs());
+            base_JPanel.graphGraph();
+        } else if (parser.TablaES.size() != 0) {
+            for(Error error :  parser.TablaES){
+                textomamalon += error.toString() + "\n";
+            }
+        }
 
         base_JPanel.setConsoleText(textomamalon);
 
-        base_JPanel.setGraphs(interpreter.getCombinedGraphs());
-        reports.tokensReport(lexemeAnalyzer.tokens);
-        reports.simbolTable(interpreter.getHash());
-        reports.errorsReport(parser.TablaES);
-
-        base_JPanel.graphGraph();
     }//GEN-LAST:event_jMenu_RunMouseClicked
 
     private void jMenuItem2_ErrorsReportMouseReleased(java.awt.event.MouseEvent evt) {

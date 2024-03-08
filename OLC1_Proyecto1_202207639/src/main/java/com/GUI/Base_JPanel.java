@@ -77,8 +77,10 @@ public class Base_JPanel extends javax.swing.JPanel {
                   jButtonafter = new javax.swing.JButton();
 
                   jTextArea_codeArea.setColumns(20);
+                  jTextArea_codeArea.setFont(new java.awt.Font("AnjaliOldLipi", 0, 14)); // NOI18N
                   jTextArea_codeArea.setLineWrap(true);
                   jTextArea_codeArea.setRows(5);
+                  jTextArea_codeArea.setWrapStyleWord(true);
                   jScrollPane1.setViewportView(jTextArea_codeArea);
 
                   jLabel1.setText("Code Area");

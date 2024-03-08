@@ -37,10 +37,7 @@ public class Reports {
                 html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(token.getRegularExpression()).append("</td>");
                 html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(token.getTokenType()).append("</td>");
                 html.append("</tr>");
-            } else {
-                errors.add(new Error(errors.size(), token.getLine(), token.getColumn(), token.getLexeme(), "Lexical Error", "The token does not match with any regular expression"));
             }
-
         }
 
         html.append("</table>");
@@ -68,17 +65,6 @@ public class Reports {
         html.append("<th style='border: 1px solid #ddd; padding: 8px;'>").append("Type").append("</th>");
         html.append("<th style='border: 1px solid #ddd; padding: 8px;'>").append("Description").append("</th>");
         html.append("</tr>");
-
-        for (Error error : errors) {
-            html.append("<tr>");
-            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getId()).append("</td>");
-            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getLine()).append("</td>");
-            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getColumn()).append("</td>");
-            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getCharacter()).append("</td>");
-            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getErrorType()).append("</td>");
-            html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(error.getDescription()).append("</td>");
-            html.append("</tr>");
-        }
 
         for (Error error : tablaES) {
             html.append("<tr>");

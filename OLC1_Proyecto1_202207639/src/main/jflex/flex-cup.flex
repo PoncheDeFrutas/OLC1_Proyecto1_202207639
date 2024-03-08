@@ -1,8 +1,7 @@
 package com.Analyzer;
 
-import java.io.*;
 import java.util.ArrayList;
-import java_cup.runtime.*;
+import com.Classes.Error;
 import com.Classes.Token;
 import com.Classes.TokenConstant;
 
@@ -11,10 +10,10 @@ import com.Classes.TokenConstant;
 %class flexcup
 %{
     public ArrayList<Token> tokens = new ArrayList<Token>();
-
-    public void addToken(Token token){
-        tokens.add(token);
-    }
+                    public ArrayList<Error> errors = new ArrayList<Error>();
+                    public void addToken(Token token){
+                        tokens.add(token);
+                    }
 %}
 %cup
 %line
@@ -58,8 +57,8 @@ ARRAY = {AT}{IDENTIFIER}
 STRING = ({QUOT}|{LQUOT}) ~({QUOT}|{RQUOT})
 DOUBLE = ( 0 |[1-9]+ 0*)({DOT}{DIGIT}+)?
 IDENTIFIER = {LETTER}({LETTER}|{DIGIT})*
-SIMPLE_COMMENT = {EXCLAMATION} .* {JUMP}
-MULTI_COMMENT = {SMALLER}{EXCLAMATION}( . | {JUMP})*{EXCLAMATION}{GREATHER}
+SIMPLE_COMMENT = {EXCLAMATION}~{JUMP}
+MULTI_COMMENT = {SMALLER}{EXCLAMATION}~{EXCLAMATION}{GREATHER}
 
 %%
 /**/
@@ -202,4 +201,4 @@ MULTI_COMMENT = {SMALLER}{EXCLAMATION}( . | {JUMP})*{EXCLAMATION}{GREATHER}
     addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.ARRAY));
     return symbol (ParserSym.ARRAY, yytext());}
 
-[^] {addToken(new Token(tokens.size(),yyline, yycolumn, yytext(),yytext(),TokenConstant.ERROR));}
+[^] {errors.add(new Error(errors.size(),yyline, yycolumn, yytext(),"ERROR LEXICO","Caracter desconocido"));}

@@ -9,6 +9,12 @@ class Parser;
 parser code{:
     public String resultado="";
     public ArrayList<Error> TablaES = new ArrayList<Error>();
+
+    public void addError(int columna, int fila, String lexema){
+        Error datos = new Error(TablaES.size(), columna, fila, lexema, "Error Sintactico", "Caracter no Esperado");
+        TablaES.add(datos);
+    }
+
     //Metodo al que se llama automaticamente ante algun error sintactico
     public void syntax_error(Symbol s){
         String lexema = "NULL";
@@ -22,7 +28,6 @@ parser code{:
         System.out.println("\t\tLexema: "+lexema);
         System.out.println("\t\tFila: "+fila);
         System.out.println("\t\tColumna: "+columna);
-        //Error(int id, int line, int column, String character, String errorType, String description)
         Error datos = new Error(TablaES.size()+1, columna, fila, lexema, "Error Sintactico", "Caracter no esperado");
         TablaES.add(datos);
     }
@@ -379,6 +384,10 @@ parameter_list::= parameter_list:pl parameter:p{:
     ;
 
 parameter::= TITLE:t DOUBLECOLON DATATYPE:dt EQUAL expression_char:exc END SEMICOLON{:
+    if(dt.toString().equals("DOUBLE")){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
     Tree P = new Tree("P", -1, -1);
     P.addChild(new Tree(t.toString(), tleft, tright));
     P.addChild(new Tree("::", -1, -1));
@@ -394,6 +403,10 @@ parameter::= TITLE:t DOUBLECOLON DATATYPE:dt EQUAL expression_char:exc END SEMIC
     RESULT = P;
     :}
     | EJES:ej DOUBLECOLON DATATYPE:dt EQUAL array_values:av END SEMICOLON{:
+    if((dt.toString().equals("CHAR[]") && ej.toString().equals("EJEY")) || (dt.toString().equals("DOUBLE") && ej.toString().equals("EJEX"))){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
     Tree P = new Tree("P", -1, -1);
     P.addChild(new Tree(ej.toString(), ejleft, ejright));
     P.addChild(new Tree("::", -1, -1));
@@ -409,6 +422,10 @@ parameter::= TITLE:t DOUBLECOLON DATATYPE:dt EQUAL expression_char:exc END SEMIC
     RESULT = P;
     :}
     | VALUES DOUBLECOLON DATATYPE:dt EQUAL array_values:av END SEMICOLON{:
+    if(dt.toString().equals("CHAR[]")){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
     Tree P = new Tree("P", -1, -1);
     P.addChild(new Tree("VALUES", -1, -1));
     P.addChild(new Tree("::", -1, -1));
@@ -424,6 +441,10 @@ parameter::= TITLE:t DOUBLECOLON DATATYPE:dt EQUAL expression_char:exc END SEMIC
     RESULT = P;
     :}
     | LABEL:l DOUBLECOLON DATATYPE:dt EQUAL array_values:av END SEMICOLON{:
+    if(dt.toString().equals("DOUBLE")){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
     Tree P = new Tree("P", -1, -1);
     P.addChild(new Tree(l.toString(), lleft, lright));
     P.addChild(new Tree("::", -1, -1));
