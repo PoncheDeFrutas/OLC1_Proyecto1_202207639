@@ -336,7 +336,7 @@ public class Interpreter {
                         break;
                     }
                 }
-                this.hash.put(name.getLexeme(), new Simbols.Builder(name.getLexeme(), type, name.getLine(), name.getColumn()).setAFvalue(array).build());
+                this.hash.put(name.getLexeme(), new Simbols.Builder(name.getLexeme(), "ARR "+ type, name.getLine(), name.getColumn()).setAFvalue(array).build());
                 break;
             case ("CHAR[]"):
                 ArrayList<String> arrayS = new ArrayList<String>();
@@ -350,7 +350,7 @@ public class Interpreter {
                         break;
                     }
                 }
-                this.hash.put(name.getLexeme(), new Simbols.Builder(name.getLexeme(), type, name.getLine(), name.getColumn()).setASvalue(arrayS).build());
+                this.hash.put(name.getLexeme(), new Simbols.Builder(name.getLexeme(),"ARR "+ type, name.getLine(), name.getColumn()).setASvalue(arrayS).build());
                 break;
         }
         this.Instruccions.remove(0); //END

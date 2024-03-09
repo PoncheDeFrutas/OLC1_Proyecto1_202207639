@@ -108,11 +108,11 @@ public class Reports {
             html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(simbol.getType()).append("</td>");
             if(simbol.getSvalue() != null){
                 html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(simbol.getSvalue()).append("</td>");
-            } else if (!Float.isNaN(simbol.getFvalue())){
+            } else if (!Float.isNaN(simbol.getFvalue()) && simbol.getASvalue() == null && simbol.getAFvalue() == null){
                 html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(simbol.getFvalue()).append("</td>");
-            } else if (!simbol.getASvalue().isEmpty()){
+            } else if (simbol.getASvalue() != null){
                 html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(simbol.getASvalue()).append("</td>");
-            } else if (!simbol.getAFvalue().isEmpty()){
+            } else if (simbol.getAFvalue() != null){
                 html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append(simbol.getAFvalue()).append("</td>");
             } else {
                 html.append("<td style='border: 1px solid #ddd; padding: 8px;'>").append("null").append("</td>");

@@ -21,14 +21,14 @@ parser code{:
         if (s.value != null){
             lexema = s.value.toString();
         }
-        int fila = s.right;
-        int columna = s.left;
+        int fila = s.left;
+        int columna = s.right;
 
         System.out.println("!!!!!!! Error Sintactico Recuperado !!!!!!!");
         System.out.println("\t\tLexema: "+lexema);
         System.out.println("\t\tFila: "+fila);
         System.out.println("\t\tColumna: "+columna);
-        Error datos = new Error(TablaES.size()+1, columna, fila, lexema, "Error Sintactico", "Caracter no esperado");
+        Error datos = new Error(TablaES.size()+1, fila, columna, lexema, "Error Sintactico", "Caracter no esperado");
         TablaES.add(datos);
     }
 
@@ -38,15 +38,15 @@ parser code{:
         if (s.value != null){
             lexema = s.value.toString();
         }
-        int fila = s.right;
-        int columna = s.left;
+        int fila = s.left;
+        int columna = s.right;
 
         System.out.println("!!!!!!! Error Sintactico, Panic Mode !!!!!!! ");
         System.out.println("\t\tLexema: "+lexema);
         System.out.println("\t\tFila: "+fila);
         System.out.println("\t\tColumna: "+columna);
 
-        Error datos = new Error(TablaES.size()+1, columna, fila, lexema, "Error Sintactico", "Caracter no esperado");
+        Error datos = new Error(TablaES.size()+1, fila, columna, lexema, "Error Sintactico", "Caracter no esperado");
         TablaES.add(datos);
     }
 :};
@@ -56,7 +56,7 @@ LARROW, RARROW, PROGRAM, END, VAR, ARR, DATATYPE, ARITFUNC, ESTFUNC, CONSOLE, PR
 GRAPHTYPE, TITLE, EJES, VALUES, LABEL, EXEC, ID, NUM, STRING, ARRAY;
 
 nonterminal Tree start_program, statments, declaration, expression_statement, console_statement, graph_statement,
-variable_declaration, array_declaration, array_values, expression_list, function_call,
+variable_declaration, array_declaration, array_values, expression_list, function_call, error_save, errors,
 graph_parameters, parameter_list, parameter, expression, expression_char, print_statement, type_declaration;
 
 start with start_program;
@@ -137,6 +137,7 @@ type_declaration::= declaration:d{:
     }
     RESULT = TD;
     :}
+    | errors
     ;
 
 /*Producción para Variables*/
@@ -212,7 +213,6 @@ array_values::= LBRACKET expression_list:exl RBRACKET{:
     AV.addChild(new Tree(ar.toString(), arleft, arright));
     RESULT = AV;
     :}
-    | error
     ;
 
 expression_list::= expression_list:exl COMMA expression:ex{:
@@ -308,7 +308,7 @@ print_statement::= PRINT EQUAL expression_list:exl END SEMICOLON{:
     PS.addChild(new Tree(";", -1, -1));
     RESULT = PS;
     :}
-    |   COLUMN EQUAL expression_char:exc RARROW array_values:av END SEMICOLON{:
+    | COLUMN EQUAL expression_char:exc RARROW array_values:av END SEMICOLON{:
     Tree PS = new Tree("PS", -1, -1);
     PS.addChild(new Tree("COLUMN", -1, -1));
     PS.addChild(new Tree("=", -1, -1));
@@ -342,7 +342,8 @@ graph_statement::= GRAPHTYPE:gt LPAREN graph_parameters:gp RPAREN END SEMICOLON{
     GS.addChild(new Tree("END", -1, -1));
     GS.addChild(new Tree(";", -1, -1));
     RESULT = GS;
-    :};
+    :}
+    ;
 
 graph_parameters::= parameter_list:pl EXEC GRAPHTYPE:gt END SEMICOLON{:
     Tree GP = new Tree("GP", -1, -1);
@@ -356,7 +357,10 @@ graph_parameters::= parameter_list:pl EXEC GRAPHTYPE:gt END SEMICOLON{:
     GP.addChild(new Tree("END", -1, -1));
     GP.addChild(new Tree(";", -1, -1));
     RESULT = GP;
-    :};
+    :}
+    | error RPAREN END SEMICOLON
+    ;
+
 
 parameter_list::= parameter_list:pl parameter:p{:
     Tree PL = new Tree("PL", -1, -1);
@@ -459,7 +463,7 @@ parameter::= TITLE:t DOUBLECOLON DATATYPE:dt EQUAL expression_char:exc END SEMIC
     P.addChild(new Tree(";", -1, -1));
     RESULT = P;
     :}
-    | error
+    | errors
     ;
 
 expression::= function_call:fc{:
@@ -486,7 +490,6 @@ expression::= function_call:fc{:
     EX.addChild(new Tree(str.toString(), strleft, strright));
     RESULT = EX;
     :}
-    | error
     ;
 
 expression_char::= ID:id{:
@@ -499,5 +502,20 @@ expression_char::= ID:id{:
     EXC.addChild(new Tree(str.toString(), strleft, strright));
     RESULT = EXC;
     :}
-    | error
+    ;
+
+errors::= error error_save
+    | error_save
+    ;
+
+error_save::= SEMICOLON
+    | END SEMICOLON
+    | ID:id{:
+        System.out.println("Error: ID " + id + " no se encuentra en una estructura válida.");
+        Error datos = new Error(TablaES.size()+1, idleft, idright, id.toString(), "Error Sintactico", "Caracter no esperado");
+    :}
+    | ARR:arr{:
+        System.out.println("Error: arr " + arr + " no se encuentra en una estructura válida.");
+        Error datos = new Error(TablaES.size()+1, arrleft, arrright, arr.toString(), "Error Sintactico", "Caracter no esperado");
+    :}
     ;

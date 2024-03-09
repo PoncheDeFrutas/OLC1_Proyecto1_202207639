@@ -9,6 +9,7 @@ import com.Classes.Token;
 import com.Classes.Tree;
 import com.Classes.Interpreter;
 import com.Classes.TokenConstant;
+import com.Functions.Reports;
 import org.jfree.chart.ChartPanel;
 import org.junit.jupiter.api.Test;
 
@@ -112,59 +113,58 @@ AppTest
     public void testSintacticAnalyzer() throws Exception {
         String testString = """
                 PROGRAM
-                    	! Estadísticas de Ingeniería en Guatemala
-                    	CONSOLE::PRINT = "-----------------ESTADÍSTICAS DE INGENIERÍA EN GUATEMALA-----------------" END;
-                    
-                    	<! Datos estadísticos !>
-                    	VAR:DOUBLE::ingenierosElectronicos <- 150.0 END;
-                    	VAR:DOUBLE::ingenierosMecanicos <- 120.0 END;
-                    	VAR:DOUBLE::ingenierosInformaticos <- 200.0 END;
-                    
-                    	CONSOLE::PRINT = "Ingenieros Electrónicos:", ingenierosElectronicos END;
-                    	CONSOLE::PRINT = "Ingenieros Mecánicos:", ingenierosMecanicos END;
-                    	CONSOLE::PRINT = "Ingenieros Informáticos:", ingenierosInformaticos END;
-                    
-                    	VAR:DOUBLE::totalIngenieros <- SUM(SUM(ingenierosElectronicos, ingenierosMecanicos), ingenierosInformaticos) END;
-                    	CONSOLE::PRINT = "Total de Ingenieros:", totalIngenieros END;
-                    
-                    	<!
-                    		-----------------ESTADÍSTICAS DE INGENIERÍA EN GUATEMALA-----------------
-                    		Ingenieros Electrónicos: 150.0
-                    		Ingenieros Mecánicos: 120.0
-                    		Ingenieros Informáticos: 200.0
-                    		Total de Ingenieros: 470.0
-                    	!>
-                    
-                    	arr:double::@arreglo <- [ingenierosElectronicos, ingenierosMecanicos, ingenierosInformaticos] end;
-                    	CONSOLE::COLUMN = "Número de Ingenieros por Especialidad en Guatemala" -> @arreglo END;
-                    	<!
-                    		--------------------------------------------
-                    		Número de Ingenieros por Especialidad en Guatemala
-                    		--------------------------------------------
-                    		150.0
-                    		120.0
-                    		200.0
-                    	!>
-                    
-                    	!!!! Errores !!!!!\s
-                    
-                    	VAR:DOUBLE :: ingenierosElectronicos <- 150.0 END;
-                    	VAR:DOUBLE :: ingenierosElectronicos <- 150.0 end;
-                    
-                    	CONSOLE::PRINT= "Ingenieros Electrónicos:", ingenierosElectronicos END;
-                    
-                    	GRAPHBAR(
-                    		ejeX::char[] = ["Electrónicos", "Mecánicos", "Informáticos"] END;
-                    		ejeY::DOUBLE = [ingenierosElectronicos, ingenierosMecanicos, ingenierosInformaticos] END;
-                    		titulo::char[] = "Número de Ingenieros por Especialidad en Guatemala" END;
-                    		tituloX::char[] = "Especialidad" end;
-                    		tituloY::char[] = "Cantidad" end;
-                    		ejeX::char[] = ["Electrónicos", "Mecánicos", "Informáticos"] END;
-                    		EXEC GRAPHBAR end;
-                    	) END;
-                    
-                    END PROGRAM
-                    
+                        	! Estadísticas de Ingeniería en Guatemala
+                        	CONSOLE::PRINT = "-----------------ESTADÍSTICAS DE INGENIERÍA EN GUATEMALA-----------------" END;
+                        
+                        	<! Datos estadísticos !>
+                        	VAR:DOUBLE::ingenierosElectronicos <- 150.0 END;
+                        	VAR:DOUBLE::ingenierosMecanicos <- 120.0 END;
+                        	VAR:DOUBLE::ingenierosInformaticos <- 200.0 END;
+                        
+                        	CONSOLE::PRINT = "Ingenieros Electrónicos:", ingenierosElectronicos END;
+                        	CONSOLE::PRINT = "Ingenieros Mecánicos:", ingenierosMecanicos END;
+                        	CONSOLE::PRINT = "Ingenieros Informáticos:", ingenierosInformaticos END;
+                        
+                        	VAR:DOUBLE::totalIngenieros <- SUM(SUM(ingenierosElectronicos, ingenierosMecanicos), ingenierosInformaticos) END;
+                        	CONSOLE::PRINT = "Total de Ingenieros:", totalIngenieros END;
+                        
+                        	<!
+                        		-----------------ESTADÍSTICAS DE INGENIERÍA EN GUATEMALA-----------------
+                        		Ingenieros Electrónicos: 150.0
+                        		Ingenieros Mecánicos: 120.0
+                        		Ingenieros Informáticos: 200.0
+                        		Total de Ingenieros: 470.0
+                        	!>
+                        
+                        	arr:double::@arreglo <- [ingenierosElectronicos, ingenierosMecanicos, ingenierosInformaticos] end;
+                        	CONSOLE::COLUMN = "Número de Ingenieros por Especialidad en Guatemala" -> @arreglo END;
+                        	<!
+                        		--------------------------------------------
+                        		Número de Ingenieros por Especialidad en Guatemala
+                        		--------------------------------------------
+                        		150.0
+                        		120.0
+                        		200.0
+                        	!>
+                        
+                        	!!!! Errores !!!!!\s
+                        
+                        	VAR:DOUBLE :: ingenierosElectronicos <- 150.0 END;
+                        	VAR:DOUBLE :: ingenierosElectronicos <- 150.0 END;
+                        
+                        	CONSOLE::PRINT = "Ingenieros Electrónicos:", ingenierosElectronicos END;
+                        
+                        	GRAPHBAR(
+                        		ejeX::char[] = ["Electrónicos", "Mecánicos", "Informáticos"] END;
+                        		ejeY::DOUBLE = [ingenierosElectronicos, ingenierosMecanicos, ingenierosInformaticos] END;
+                        		titulo::char[] = "Número de Ingenieros por Especialidad en Guatemala" END;
+                        		tituloX::char[] = "Especialidad" end;
+                        		tituloY::char[] = "Cantidad" end;
+                        		ejeX::char[] = ["Electrónicos", "Mecánicos", "Informáticos"] END;
+                        		EXEC GRAPHBAR end;
+                        	) END;
+                        
+                        END PROGRAM
             """;
         Reader stringReader = new StringReader(testString.toUpperCase());
         flexcup flexcup = new flexcup(stringReader);
@@ -189,6 +189,10 @@ AppTest
             }
         }
 
+        Reports reports = new Reports();
+        reports.tokensReport(flexcup.tokens);
+        reports.errorsReport(parser.TablaES);
+
         if (tree != null && parser.TablaES.size() == 0) {
             tree.saveTree(tree);
             tree.printInstruccions();
@@ -200,6 +204,8 @@ AppTest
             String textomamalon = interpreter.getConsole_text();
             System.out.println(textomamalon);
             System.out.println("Sintactic Analyzer test passed");
+
+            reports.simbolTable(interpreter.getHash());
         } else if(parser.TablaES.size() != 0){
             System.out.println(parser.error_sym());
             System.out.println(parser.TablaES);
@@ -207,7 +213,6 @@ AppTest
         } else {
             System.out.println("Sintactic Analyzer test failed");
         }
-
 
 
     }
