@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Tree {
 
+    private boolean fail;
     private int line, column;
     private String lexeme;
     private ArrayList<Tree> children;
@@ -33,13 +34,15 @@ public class Tree {
     }
 
     public void saveTree(Tree seed){
-        if (seed.children.contains(null)) {
+        if (seed == null) {
+            return;
+        } else if(seed.lexeme.equals("ERR")){
             return;
         }
         for (Tree child : seed.children){
             this.saveTree(child);
         }
-        if (!Ignore.contains(seed.lexeme)) {
+        if (!Ignore.contains(seed.lexeme)){
             Instruccions.add(new Intruccions(seed.line, seed.column, seed.lexeme));
         }
     }

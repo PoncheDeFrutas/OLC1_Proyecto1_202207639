@@ -175,7 +175,7 @@ public class Interpreter {
         table.append("\nAnálisis de Arreglo\n");
 
         // Agregar los nombres de las columnas
-        table.append(String.format("%-10s %-10s %-20s %-20s\n", "Valor", "Frecuencia", "Frecuencia Absoluta", "Frecuencia Relativa"));
+        table.append(String.format("%-10s %-10s %-20s %-20s\n", "Valor", "Frecuencia", "Frecuencia Acumulada", "Frecuencia Relativa"));
 
         // Calcular los totales
         int totalFrequency = 0;
@@ -186,13 +186,12 @@ public class Interpreter {
         for (Map.Entry<Float, Integer> entry : frequencyMap.entrySet()) {
             float value = entry.getKey();
             int frequency = entry.getValue();
-            int absoluteFrequency = frequency;
+            totalAbsoluteFrequency += frequency;
             float relativeFrequency = (float) frequency / numbers.size();
 
-            table.append(String.format("%-10.2f %-10d %-20d %-20.2f\n", value, frequency, absoluteFrequency, relativeFrequency));
+            table.append(String.format("%-10.2f %-10d %-20d %-20.2f\n", value, frequency, totalAbsoluteFrequency, relativeFrequency));
 
             totalFrequency += frequency;
-            totalAbsoluteFrequency += absoluteFrequency;
             totalRelativeFrequency += relativeFrequency;
         }
 
@@ -399,7 +398,6 @@ public class Interpreter {
         } else if (this.isParsableToFloat(value)) {
             num = Float.parseFloat(value);
         } else if (this.hash.containsKey(value)) {
-
             num = this.hash.get(value).getFvalue();
         }
         return num;
