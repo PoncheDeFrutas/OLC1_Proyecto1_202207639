@@ -12,6 +12,8 @@ public class Base_JPanel extends javax.swing.JPanel {
     private String filePath;
     private String codeTextArea;
 
+    private Num_Line_Text_Area numbers;
+
     private CombinedGraphs combinedGraphs = null;
 
     private int last = 0;
@@ -29,6 +31,9 @@ public class Base_JPanel extends javax.swing.JPanel {
         if (codeTextArea != null) {
             this.jTextArea_codeArea.setText(this.codeTextArea);
         }
+
+        numbers = new Num_Line_Text_Area(jTextArea_codeArea);
+        jScrollPane1.setRowHeaderView(numbers);
     }
 
     public void setGraphs(CombinedGraphs combinedGraphs) {
