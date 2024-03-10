@@ -200,7 +200,7 @@ public class Interpreter {
 
         return table.toString();
     }
-
+    
     public void graphGraphBL(String graph){
         String Title = "No Hay titulo";
         String tituloX = "No Hay titulo";
@@ -615,6 +615,10 @@ public class Interpreter {
                     if(this.hash.get(column).getAFvalue() != null){
                         for (float num : this.hash.get(column).getAFvalue()){
                             console_text += "\n" + num;
+                        }
+                    } else if (this.hash.get(column).getASvalue() != null) {
+                        for (String data : this.hash.get(column).getASvalue()){
+                            console_text += "\n" + data;
                         }
                     } else {
                         console_text += "SIN DATOS";
