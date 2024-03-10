@@ -3,6 +3,8 @@ package com.GUI;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
@@ -47,6 +49,12 @@ public class CombinedGraphs {
                 true,
                 true,
                 false);
+
+        PiePlot plot = (PiePlot) pieChart.getPlot();
+        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0} = {1} ({2})"));
+        plot.setLabelBackgroundPaint(Color.WHITE);
+        plot.setLabelOutlinePaint(Color.BLACK);
+        plot.setLabelShadowPaint(Color.WHITE);
 
         ChartPanel chartPanel = new ChartPanel(pieChart);
         chartPanel.setPreferredSize(new Dimension(560, 367));

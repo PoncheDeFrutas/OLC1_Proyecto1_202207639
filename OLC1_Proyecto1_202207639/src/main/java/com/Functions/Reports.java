@@ -16,6 +16,9 @@ public class Reports {
 
     public boolean tokensReport(ArrayList<Token> tokens) {
         StringBuilder html = new StringBuilder();
+        html.append("<h1>Tabla de Tokens</h1>"); // Aquí agregamos el título
+        html.append("<table style='border-collapse: collapse; width: 100%; text-align: center;'>");
+
         html.append("<table style='border-collapse: collapse; width: 100%; text-align: center;'>");
 
         html.append("<tr style='background-color: #f2f2f2;'>");
@@ -55,6 +58,9 @@ public class Reports {
 
     public boolean errorsReport(ArrayList<Error> tablaES) {
         StringBuilder html = new StringBuilder();
+        html.append("<h1>Tabla de Errores</h1>"); // Aquí agregamos el título
+        html.append("<table style='border-collapse: collapse; width: 100%; text-align: center;'>");
+
         html.append("<table style='border-collapse: collapse; width: 100%; text-align: center;'>");
 
         html.append("<tr style='background-color: #f2f2f2;'>");
@@ -91,6 +97,9 @@ public class Reports {
 
     public boolean simbolTable(HashMap<String, Simbols> hash){
         StringBuilder html = new StringBuilder();
+        html.append("<h1>Tabla de Símbolos</h1>"); // Aquí agregamos el título
+        html.append("<table style='border-collapse: collapse; width: 100%; text-align: center;'>");
+
         html.append("<table style='border-collapse: collapse; width: 100%; text-align: center;'>");
 
         html.append("<tr style='background-color: #f2f2f2;'>");
