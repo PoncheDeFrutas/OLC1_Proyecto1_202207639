@@ -67,14 +67,13 @@ public class Interpreter {
                 this.Instruccions.remove(0); //::
                 this.Instruccions.remove(0); // char[]
                 this.Instruccions.remove(0); // =
-                if(this.hash.containsKey(this.Instruccions.get(0))){
-                    if(this.hash.get(this.Instruccions.get(0)).getSvalue() != null){
-                        Title = this.hash.get(this.Instruccions.remove(0)).getSvalue();
-                    } else{
-                        this.Instruccions.remove(0);
+                String tempdata = this.Instruccions.remove(0).getLexeme(); //STRING, ID
+                if(this.hash.containsKey(tempdata)){ //ID
+                    if(this.hash.get(tempdata).getSvalue() != null){
+                        Title = this.hash.get(tempdata).getSvalue();
                     }
-                } else{
-                    Title = this.Instruccions.remove(0).getLexeme(); //STRING
+                } else if(tempdata.endsWith("”") || tempdata.endsWith("\"")){
+                    Title = tempdata;
                 }
                 this.Instruccions.remove(0); // END
                 this.Instruccions.remove(0); // ;
@@ -121,12 +120,7 @@ public class Interpreter {
                 data = this.Instruccions.remove(0).getLexeme(); // [, @ID
                 if(data == "["){
                     while (true){
-                        data = this.Instruccions.remove(0).getLexeme(); //NUM, ID
-                        if(this.hash.containsKey(data)){
-                            values.add(this.hash.get(data).getFvalue());
-                        } else if (this.isParsableToFloat(data)){
-                            values.add(Float.parseFloat(data));
-                        }
+                        values.add(this.getFloatValue());
                         if(this.Instruccions.remove(0).getLexeme() == "]"){ //,
                             break;
                         }
@@ -200,7 +194,7 @@ public class Interpreter {
 
         return table.toString();
     }
-    
+
     public void graphGraphBL(String graph){
         String Title = "No Hay titulo";
         String tituloX = "No Hay titulo";
@@ -214,14 +208,13 @@ public class Interpreter {
                 this.Instruccions.remove(0); //::
                 this.Instruccions.remove(0); // char[]
                 this.Instruccions.remove(0); // =
-                if(this.hash.containsKey(this.Instruccions.get(0))){
-                    if(this.hash.get(this.Instruccions.get(0)).getSvalue() != null){
-                        tempT = this.hash.get(this.Instruccions.remove(0)).getSvalue();
-                    } else{
-                        this.Instruccions.remove(0);
+                String tempdata = this.Instruccions.remove(0).getLexeme(); //STRING, ID
+                if(this.hash.containsKey(tempdata)){ //ID
+                    if(this.hash.get(tempdata).getSvalue() != null){
+                        tempT = this.hash.get(tempdata).getSvalue();
                     }
-                } else{
-                    tempT = this.Instruccions.remove(0).getLexeme(); //STRING
+                } else if(tempdata.endsWith("”") || tempdata.endsWith("\"")){
+                    tempT = tempdata;
                 }
                 this.Instruccions.remove(0); // END
                 this.Instruccions.remove(0); // ;
@@ -262,8 +255,8 @@ public class Interpreter {
                     }
                 } else{
                     if(this.hash.containsKey(data)){
-                        if(this.hash.get(data).getSvalue() != null){
-                            ejeX.add(this.hash.get(data).getSvalue());
+                        if(this.hash.get(data).getASvalue() != null){
+                            ejeX = this.hash.get(data).getASvalue();
                         } else{
                             ejeX.add("NO ENCONTRADO: " + data);
                         }
@@ -282,12 +275,7 @@ public class Interpreter {
                 data = this.Instruccions.remove(0).getLexeme(); // [ / @ID
                 if(data == "["){
                     while (true){
-                        data = this.Instruccions.remove(0).getLexeme(); //NUM, ID
-                        if(this.hash.containsKey(data)){
-                            ejeY.add(this.hash.get(data).getFvalue());
-                        } else if (this.isParsableToFloat(data)){
-                            ejeY.add(Float.parseFloat(data));
-                        }
+                        ejeY.add(this.getFloatValue());
                         if(this.Instruccions.remove(0).getLexeme() == "]"){ //,
                             break;
                         }
@@ -617,8 +605,8 @@ public class Interpreter {
                             console_text += "\n" + num;
                         }
                     } else if (this.hash.get(column).getASvalue() != null) {
-                        for (String data : this.hash.get(column).getASvalue()){
-                            console_text += "\n" + data;
+                        for (String num : this.hash.get(column).getASvalue()){
+                            console_text += "\n" + num;
                         }
                     } else {
                         console_text += "SIN DATOS";
