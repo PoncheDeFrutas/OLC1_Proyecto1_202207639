@@ -326,7 +326,7 @@ public class Main_JFrame extends javax.swing.JFrame {
                 base_JPanel.setGraphs(interpreter.getCombinedGraphs());
                 base_JPanel.graphGraph();
             } catch (Exception e) {
-                textomamalon += e.getMessage() + "\n No, se pudo interpretar";
+                textomamalon += "\n" + e.getMessage() + "\n No, se pudo interpretar\n";
             }
             if (parser.TablaES != null) {
                 if (!parser.TablaES.isEmpty()) {
