@@ -187,7 +187,7 @@ public class Base_JPanel extends javax.swing.JPanel {
 
          private void jButtonafterMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonafterMousePressed
                   // TODO add your handling code here:
-             if(this.last == combinedGraphs.getChartPanels().size()){
+             if(this.last == combinedGraphs.getChartPanels().size() - 1){
                  this.last = 0;
 
              } else {
