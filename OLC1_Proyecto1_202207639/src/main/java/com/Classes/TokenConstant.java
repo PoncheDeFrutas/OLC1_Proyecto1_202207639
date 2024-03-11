@@ -13,7 +13,6 @@ public enum TokenConstant {
     LARROW,
     RARROW,
     PROGRAM,
-    ENDPROGRAM,
     END,
     VAR,
     ARR,
@@ -34,6 +33,8 @@ public enum TokenConstant {
     STRING,
     ARRAY,
     ERROR,
+    EXPRESSION,
+    ENDPROGRAM,
     EOF
 
 

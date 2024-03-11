@@ -1,0 +1,74 @@
+<símbolo no terminal> ::= <definición> donde el ::= significa "se define como".
+Los símbolos no terminales se encierran entre corchetes angulares (<>).
+Las definiciones pueden contener símbolos no terminales y terminales.
+‘|’ (barra vertical): Indica alternativas, es decir, una elección entre varias opciones.
+
+//Ejemplo
+<símbolo no terminal> ::= <definición>
+
+
+<start_program> ::= PROGRAM <statements> END PROGRAM
+
+<statements> ::= <statements> <type_declaration>
+    | <type_declaration>
+
+<type_declaration> ::= <declaration>
+    | <expression_statement>
+    | <console_statement>
+    | <graph_statement>
+    | <errors>
+
+<declaration> ::= <variable_declaration>
+    | <array_declaration>
+
+<variable_declaration> ::= VAR COLON DATATYPE DOUBLECOLON ID LARROW <expression> END SEMICOLON
+
+<array_declaration> ::= ARR COLON DATATYPE DOUBLECOLON ARRAY LARROW <array_values> END SEMICOLON
+
+<array_values> ::= LBRACKET <expression_list> RBRACKET
+    | ARRAY
+
+<expression_list> ::= <expression_list> COMMA <expression>
+    | <expression>
+
+<expression_statement> ::= <function_call>
+
+<function_call> ::= ESTFUNC LPAREN <array_values> RPAREN
+    | ARITFUNC LPAREN <expression> COMMA <expression> RPAREN
+
+<console_statement> ::= CONSOLE DOUBLECOLON <print_statement>
+
+<print_statement> ::= PRINT EQUAL <expression_list> END SEMICOLON
+    | COLUMN EQUAL <expression_char> RARROW <array_values> END SEMICOLON
+
+<graph_statement> ::= GRAPHTYPE LPAREN <graph_parameters> RPAREN END SEMICOLON
+
+<graph_parameters> ::= <parameter_list> EXEC GRAPHTYPE END SEMICOLON
+    | <errors> RPAREN END SEMICOLON
+
+
+<parameter_list> ::= <parameter_list> <parameter>
+    | <parameter>
+
+<parameter> ::= TITLE DOUBLECOLON DATATYPE EQUAL <expression_char> END SEMICOLON
+    | EJES DOUBLECOLON DATATYPE EQUAL <array_values> END SEMICOLON
+    | VALUES DOUBLECOLON DATATYPE EQUAL <array_values> END SEMICOLON
+    | LABEL DOUBLECOLON DATATYPE EQUAL <array_values> END SEMICOLON
+    | <errors>
+
+<expression> ::= <function_call>
+    | ID
+    | NUM
+    | STRING
+
+<expression_char> ::= ID
+    | STRING
+
+<errors> ::= error <error_save>
+    | <error_save>
+
+<error_save> ::= SEMICOLON
+    | END SEMICOLON
+    | ID
+    | ARR
+

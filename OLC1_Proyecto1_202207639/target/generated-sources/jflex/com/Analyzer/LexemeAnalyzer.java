@@ -4,7 +4,6 @@
 
 package com.Analyzer;
 
-import java.io.*;
 import java.util.ArrayList;
 import com.Classes.Token;
 import com.Classes.TokenConstant;
