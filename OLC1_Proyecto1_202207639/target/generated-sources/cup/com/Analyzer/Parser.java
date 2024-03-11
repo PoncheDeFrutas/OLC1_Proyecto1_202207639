@@ -6,6 +6,9 @@
 package com.Analyzer;
 
 import java_cup.runtime.*;
+import com.Classes.Tree;
+import com.Classes.Error;
+import java.util.ArrayList;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -31,7 +34,21 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\002\000\002\002\004\000\002\002\003" });
+    "\000\055\000\002\002\004\000\002\002\006\000\002\003" +
+    "\004\000\002\003\003\000\002\025\003\000\002\025\003" +
+    "\000\002\025\003\000\002\025\003\000\002\025\003\000" +
+    "\002\004\003\000\002\004\003\000\002\010\013\000\002" +
+    "\011\013\000\002\012\005\000\002\012\003\000\002\013" +
+    "\005\000\002\013\003\000\002\005\003\000\002\014\006" +
+    "\000\002\014\010\000\002\006\005\000\002\024\007\000" +
+    "\002\024\011\000\002\007\010\000\002\017\007\000\002" +
+    "\017\006\000\002\020\004\000\002\020\003\000\002\021" +
+    "\011\000\002\021\011\000\002\021\011\000\002\021\011" +
+    "\000\002\021\003\000\002\022\003\000\002\022\003\000" +
+    "\002\022\003\000\002\022\003\000\002\023\003\000\002" +
+    "\023\003\000\002\016\004\000\002\016\003\000\002\015" +
+    "\003\000\002\015\004\000\002\015\003\000\002\015\003" +
+    "" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -39,9 +56,130 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\004\000\004\004\005\001\002\000\004\002\006\001" +
-    "\002\000\004\002\000\001\002\000\004\002\001\001\002" +
-    "" });
+    "\000\177\000\004\017\005\001\002\000\004\002\201\001" +
+    "\002\000\026\003\025\012\010\020\013\021\032\022\011" +
+    "\024\030\025\006\026\016\031\021\037\017\001\002\000" +
+    "\004\005\176\001\002\000\026\003\ufffd\012\ufffd\020\ufffd" +
+    "\021\ufffd\022\ufffd\024\ufffd\025\ufffd\026\ufffd\031\ufffd\037" +
+    "\ufffd\001\002\000\040\003\uffd8\012\uffd8\020\uffd8\021\uffd8" +
+    "\022\uffd8\024\uffd8\025\uffd8\026\uffd8\031\uffd8\032\uffd8\033" +
+    "\uffd8\034\uffd8\035\uffd8\036\uffd8\037\uffd8\001\002\000\030" +
+    "\003\uffd5\012\uffd5\013\166\020\uffd5\021\uffd5\022\uffd5\024" +
+    "\uffd5\025\uffd5\026\uffd5\031\uffd5\037\uffd5\001\002\000\026" +
+    "\003\ufffa\012\ufffa\020\ufffa\021\ufffa\022\ufffa\024\ufffa\025" +
+    "\ufffa\026\ufffa\031\ufffa\037\ufffa\001\002\000\004\012\051" +
+    "\001\002\000\026\003\ufffb\012\ufffb\020\ufffb\021\ufffb\022" +
+    "\ufffb\024\ufffb\025\ufffb\026\ufffb\031\ufffb\037\ufffb\001\002" +
+    "\000\026\003\ufff0\012\ufff0\020\ufff0\021\ufff0\022\ufff0\024" +
+    "\ufff0\025\ufff0\026\ufff0\031\ufff0\037\ufff0\001\002\000\004" +
+    "\014\150\001\002\000\040\003\uffd6\012\uffd6\020\uffd6\021" +
+    "\uffd6\022\uffd6\024\uffd6\025\uffd6\026\uffd6\031\uffd6\032\uffd6" +
+    "\033\uffd6\034\uffd6\035\uffd6\036\uffd6\037\uffd6\001\002\000" +
+    "\026\003\ufff9\012\ufff9\020\ufff9\021\ufff9\022\ufff9\024\ufff9" +
+    "\025\ufff9\026\ufff9\031\ufff9\037\ufff9\001\002\000\004\005" +
+    "\062\001\002\000\026\003\ufffc\012\ufffc\020\ufffc\021\ufffc" +
+    "\022\ufffc\024\ufffc\025\ufffc\026\ufffc\031\ufffc\037\ufffc\001" +
+    "\002\000\026\003\ufff8\012\ufff8\020\ufff8\021\ufff8\022\ufff8" +
+    "\024\ufff8\025\ufff8\026\ufff8\031\ufff8\037\ufff8\001\002\000" +
+    "\026\003\ufffe\012\ufffe\020\ufffe\021\ufffe\022\ufffe\024\ufffe" +
+    "\025\ufffe\026\ufffe\031\ufffe\037\ufffe\001\002\000\012\012" +
+    "\010\020\013\022\061\037\017\001\002\000\026\003\ufff7" +
+    "\012\ufff7\020\ufff7\021\ufff7\022\ufff7\024\ufff7\025\ufff7\026" +
+    "\ufff7\031\ufff7\037\ufff7\001\002\000\040\003\uffd9\012\uffd9" +
+    "\020\uffd9\021\uffd9\022\uffd9\024\uffd9\025\uffd9\026\uffd9\031" +
+    "\uffd9\032\uffd9\033\uffd9\034\uffd9\035\uffd9\036\uffd9\037\uffd9" +
+    "\001\002\000\004\005\053\001\002\000\026\003\025\012" +
+    "\010\020\047\021\032\022\011\024\030\025\006\026\016" +
+    "\031\021\037\017\001\002\000\004\013\033\001\002\000" +
+    "\004\023\034\001\002\000\004\014\035\001\002\000\004" +
+    "\037\036\001\002\000\004\015\037\001\002\000\014\024" +
+    "\030\025\006\037\040\040\041\041\042\001\002\000\012" +
+    "\006\uffdf\010\uffdf\011\uffdf\020\uffdf\001\002\000\012\006" +
+    "\uffde\010\uffde\011\uffde\020\uffde\001\002\000\012\006\uffdd" +
+    "\010\uffdd\011\uffdd\020\uffdd\001\002\000\004\020\045\001" +
+    "\002\000\012\006\uffe0\010\uffe0\011\uffe0\020\uffe0\001\002" +
+    "\000\004\012\046\001\002\000\026\003\ufff6\012\ufff6\020" +
+    "\ufff6\021\ufff6\022\ufff6\024\ufff6\025\ufff6\026\ufff6\031\ufff6" +
+    "\037\ufff6\001\002\000\006\012\051\017\052\001\002\000" +
+    "\026\003\uffff\012\uffff\020\uffff\021\uffff\022\uffff\024\uffff" +
+    "\025\uffff\026\uffff\031\uffff\037\uffff\001\002\000\040\003" +
+    "\uffd7\012\uffd7\020\uffd7\021\uffd7\022\uffd7\024\uffd7\025\uffd7" +
+    "\026\uffd7\031\uffd7\032\uffd7\033\uffd7\034\uffd7\035\uffd7\036" +
+    "\uffd7\037\uffd7\001\002\000\004\002\000\001\002\000\014" +
+    "\024\030\025\006\037\040\040\041\041\042\001\002\000" +
+    "\004\011\055\001\002\000\014\024\030\025\006\037\040" +
+    "\040\041\041\042\001\002\000\004\006\057\001\002\000" +
+    "\034\003\uffee\006\uffee\010\uffee\011\uffee\012\uffee\020\uffee" +
+    "\021\uffee\022\uffee\024\uffee\025\uffee\026\uffee\031\uffee\037" +
+    "\uffee\001\002\000\040\003\uffda\012\uffda\020\uffda\021\uffda" +
+    "\022\uffda\024\uffda\025\uffda\026\uffda\031\uffda\032\uffda\033" +
+    "\uffda\034\uffda\035\uffda\036\uffda\037\uffda\001\002\000\040" +
+    "\003\uffd5\012\uffd5\020\uffd5\021\uffd5\022\uffd5\024\uffd5\025" +
+    "\uffd5\026\uffd5\031\uffd5\032\uffd5\033\uffd5\034\uffd5\035\uffd5" +
+    "\036\uffd5\037\uffd5\001\002\000\024\003\067\012\010\020" +
+    "\013\022\061\032\065\033\064\034\072\035\066\037\017" +
+    "\001\002\000\004\006\145\001\002\000\004\014\137\001" +
+    "\002\000\004\014\127\001\002\000\004\014\121\001\002" +
+    "\000\014\006\116\012\010\020\013\022\061\037\017\001" +
+    "\002\000\026\003\uffe1\012\uffe1\020\uffe1\022\uffe1\032\uffe1" +
+    "\033\uffe1\034\uffe1\035\uffe1\036\uffe1\037\uffe1\001\002\000" +
+    "\026\003\uffe6\012\uffe6\020\uffe6\022\uffe6\032\uffe6\033\uffe6" +
+    "\034\uffe6\035\uffe6\036\uffe6\037\uffe6\001\002\000\004\014" +
+    "\101\001\002\000\026\003\025\012\010\020\013\022\061" +
+    "\032\065\033\064\034\072\035\066\036\074\037\017\001" +
+    "\002\000\004\031\076\001\002\000\026\003\uffe7\012\uffe7" +
+    "\020\uffe7\022\uffe7\032\uffe7\033\uffe7\034\uffe7\035\uffe7\036" +
+    "\uffe7\037\uffe7\001\002\000\004\020\077\001\002\000\004" +
+    "\012\100\001\002\000\004\006\uffe9\001\002\000\004\023" +
+    "\102\001\002\000\004\004\103\001\002\000\006\007\105" +
+    "\042\106\001\002\000\004\020\114\001\002\000\014\024" +
+    "\030\025\006\037\040\040\041\041\042\001\002\000\006" +
+    "\006\ufff3\020\ufff3\001\002\000\006\010\112\011\111\001" +
+    "\002\000\010\010\ufff1\011\ufff1\020\ufff1\001\002\000\014" +
+    "\024\030\025\006\037\040\040\041\041\042\001\002\000" +
+    "\006\006\ufff4\020\ufff4\001\002\000\010\010\ufff2\011\ufff2" +
+    "\020\ufff2\001\002\000\004\012\115\001\002\000\026\003" +
+    "\uffe3\012\uffe3\020\uffe3\022\uffe3\032\uffe3\033\uffe3\034\uffe3" +
+    "\035\uffe3\036\uffe3\037\uffe3\001\002\000\004\020\117\001" +
+    "\002\000\004\012\120\001\002\000\004\006\uffe8\001\002" +
+    "\000\004\023\122\001\002\000\004\004\123\001\002\000" +
+    "\006\007\105\042\106\001\002\000\004\020\125\001\002" +
+    "\000\004\012\126\001\002\000\026\003\uffe2\012\uffe2\020" +
+    "\uffe2\022\uffe2\032\uffe2\033\uffe2\034\uffe2\035\uffe2\036\uffe2" +
+    "\037\uffe2\001\002\000\004\023\130\001\002\000\004\004" +
+    "\131\001\002\000\006\037\132\041\134\001\002\000\006" +
+    "\016\uffdc\020\uffdc\001\002\000\004\020\135\001\002\000" +
+    "\006\016\uffdb\020\uffdb\001\002\000\004\012\136\001\002" +
+    "\000\026\003\uffe5\012\uffe5\020\uffe5\022\uffe5\032\uffe5\033" +
+    "\uffe5\034\uffe5\035\uffe5\036\uffe5\037\uffe5\001\002\000\004" +
+    "\023\140\001\002\000\004\004\141\001\002\000\006\007" +
+    "\105\042\106\001\002\000\004\020\143\001\002\000\004" +
+    "\012\144\001\002\000\026\003\uffe4\012\uffe4\020\uffe4\022" +
+    "\uffe4\032\uffe4\033\uffe4\034\uffe4\035\uffe4\036\uffe4\037\uffe4" +
+    "\001\002\000\004\020\146\001\002\000\004\012\147\001" +
+    "\002\000\026\003\uffea\012\uffea\020\uffea\021\uffea\022\uffea" +
+    "\024\uffea\025\uffea\026\uffea\031\uffea\037\uffea\001\002\000" +
+    "\006\027\152\030\151\001\002\000\004\004\160\001\002" +
+    "\000\004\004\154\001\002\000\026\003\uffed\012\uffed\020" +
+    "\uffed\021\uffed\022\uffed\024\uffed\025\uffed\026\uffed\031\uffed" +
+    "\037\uffed\001\002\000\014\024\030\025\006\037\040\040" +
+    "\041\041\042\001\002\000\006\011\111\020\156\001\002" +
+    "\000\004\012\157\001\002\000\026\003\uffec\012\uffec\020" +
+    "\uffec\021\uffec\022\uffec\024\uffec\025\uffec\026\uffec\031\uffec" +
+    "\037\uffec\001\002\000\006\037\132\041\134\001\002\000" +
+    "\004\016\162\001\002\000\006\007\105\042\106\001\002" +
+    "\000\004\020\164\001\002\000\004\012\165\001\002\000" +
+    "\026\003\uffeb\012\uffeb\020\uffeb\021\uffeb\022\uffeb\024\uffeb" +
+    "\025\uffeb\026\uffeb\031\uffeb\037\uffeb\001\002\000\004\023" +
+    "\167\001\002\000\004\014\170\001\002\000\004\042\171" +
+    "\001\002\000\004\015\172\001\002\000\006\007\105\042" +
+    "\106\001\002\000\004\020\174\001\002\000\004\012\175" +
+    "\001\002\000\026\003\ufff5\012\ufff5\020\ufff5\021\ufff5\022" +
+    "\ufff5\024\ufff5\025\ufff5\026\ufff5\031\ufff5\037\ufff5\001\002" +
+    "\000\006\007\105\042\106\001\002\000\004\006\200\001" +
+    "\002\000\034\003\uffef\006\uffef\010\uffef\011\uffef\012\uffef" +
+    "\020\uffef\021\uffef\022\uffef\024\uffef\025\uffef\026\uffef\031" +
+    "\uffef\037\uffef\001\002\000\004\002\001\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -49,8 +187,54 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\004\000\004\002\003\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001" });
+    "\000\177\000\004\002\003\001\001\000\002\001\001\000" +
+    "\030\003\030\004\006\005\021\006\013\007\011\010\022" +
+    "\011\025\014\014\015\026\016\017\025\023\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\015\057\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\026\004\006\005\021\006\013\007\011\010\022\011\025" +
+    "\014\014\015\026\016\017\025\047\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\006\014\043\022\042\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\006\014\043\022\053\001\001\000" +
+    "\002\001\001\000\006\014\043\022\055\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\014\015\026\016\067\017\062\020\072\021\070" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\004\015\057\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\010\015" +
+    "\026\016\067\021\074\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\004\012\103" +
+    "\001\001\000\002\001\001\000\010\013\106\014\043\022" +
+    "\107\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\006\014\043\022\112\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\012\123\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\023\132\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\004\012\141\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\004\024\152\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\010" +
+    "\013\154\014\043\022\107\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\023\160\001\001" +
+    "\000\002\001\001\000\004\012\162\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\004\012\172\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\004\012\176\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -88,6 +272,51 @@ public class Parser extends java_cup.runtime.lr_parser {
   public int error_sym() {return 1;}
 
 
+
+    public String resultado="";
+    public ArrayList<Error> TablaES = new ArrayList<Error>();
+
+    public void addError(int columna, int fila, String lexema){
+        Error datos = new Error(TablaES.size(), columna, fila, lexema, "Error Sintactico", "Caracter no Esperado");
+        TablaES.add(datos);
+    }
+
+    //Metodo al que se llama automaticamente ante algun error sintactico
+    public void syntax_error(Symbol s){
+        String lexema = "NULL";
+        if (s.value != null){
+            lexema = s.value.toString();
+        }
+        int fila = s.left;
+        int columna = s.right;
+
+        System.out.println("!!!!!!! Error Sintactico Recuperado !!!!!!!");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+        Error datos = new Error(TablaES.size()+1, fila, columna, lexema, "Error Sintactico", "Caracter no esperado");
+        TablaES.add(datos);
+    }
+
+    //Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        String lexema = "NULL";
+        if (s.value != null){
+            lexema = s.value.toString();
+        }
+        int fila = s.left;
+        int columna = s.right;
+
+        System.out.println("!!!!!!! Error Sintactico, Panic Mode !!!!!!! ");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+        Error datos = new Error(TablaES.size()+1, fila, columna, lexema, "Error Sintactico", "Caracter no esperado");
+        TablaES.add(datos);
+    }
+
+
 /** Cup generated class to encapsulate user supplied action code.*/
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 class CUP$Parser$actions {
@@ -113,12 +342,12 @@ class CUP$Parser$actions {
       switch (CUP$Parser$act_num)
         {
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 0: // $START ::= L EOF 
+          case 0: // $START ::= start_program EOF 
             {
               Object RESULT =null;
 		int start_valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int start_valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
-		Object start_val = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		Tree start_val = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		RESULT = start_val;
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("$START",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -127,14 +356,955 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 1: // L ::= EQUAL 
+          case 1: // start_program ::= PROGRAM statments END PROGRAM 
             {
-              Object RESULT =null;
+              Tree RESULT =null;
+		int stleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int stright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Tree st = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		
+    Tree SP = new Tree("SP", -1, -1);
+    SP.addChild(new Tree("PROGRAM", -1, -1));
+    try {
+        SP.addChild(st);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    SP.addChild(new Tree("END", -1, -1));
+    SP.addChild(new Tree("PROGRAM", -1, -1));
+    RESULT = SP;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("start_program",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 2: // statments ::= statments type_declaration 
+            {
+              Tree RESULT =null;
+		int stleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int stright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		Tree st = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		int tdleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int tdright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree td = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree ST = new Tree("ST", -1, -1);
+    try {
+        ST.addChild(st);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    try {
+        ST.addChild(td);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = ST;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("statments",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 3: // statments ::= type_declaration 
+            {
+              Tree RESULT =null;
+		int tdleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int tdright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree td = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree ST = new Tree("ST", -1, -1);
+    try {
+        ST.addChild(td);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = ST;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("statments",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 4: // type_declaration ::= declaration 
+            {
+              Tree RESULT =null;
+		int dleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int dright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree d = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree TD = new Tree("TD", -1, -1);
+    try {
+        TD.addChild(d);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = TD;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("type_declaration",19, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 5: // type_declaration ::= expression_statement 
+            {
+              Tree RESULT =null;
+		int esleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int esright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree es = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree TD = new Tree("TD", -1, -1);
+    try {
+        TD.addChild(es);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = TD;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("type_declaration",19, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 6: // type_declaration ::= console_statement 
+            {
+              Tree RESULT =null;
+		int csleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int csright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree cs = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree TD = new Tree("TD", -1, -1);
+    try {
+        TD.addChild(cs);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = TD;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("type_declaration",19, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 7: // type_declaration ::= graph_statement 
+            {
+              Tree RESULT =null;
+		int gsleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int gsright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree gs = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree TD = new Tree("TD", -1, -1);
+    try {
+        TD.addChild(gs);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = TD;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("type_declaration",19, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 8: // type_declaration ::= errors 
+            {
+              Tree RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree e = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    RESULT = new Tree("ERR", -1, -1);
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("type_declaration",19, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 9: // declaration ::= variable_declaration 
+            {
+              Tree RESULT =null;
+		int vdleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int vdright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree vd = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree D = new Tree("D", -1, -1);
+    try {
+        D.addChild(vd);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = D;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("declaration",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 10: // declaration ::= array_declaration 
+            {
+              Tree RESULT =null;
+		int adleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int adright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree ad = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree D = new Tree("D", -1, -1);
+    try {
+        D.addChild(ad);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = D;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("declaration",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 11: // variable_declaration ::= VAR COLON DATATYPE DOUBLECOLON ID LARROW expression END SEMICOLON 
+            {
+              Tree RESULT =null;
+		int dtleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).left;
+		int dtright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).right;
+		Object dt = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-6)).value;
+		int idleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int exleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int exright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Tree ex = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		
+    Tree VD = new Tree("VD", -1, -1);
+    VD.addChild(new Tree("VAR", -1, -1));
+    VD.addChild(new Tree(":", -1, -1));
+    VD.addChild(new Tree(dt.toString(), dtleft, dtright));
+    VD.addChild(new Tree("::", -1, -1));
+    VD.addChild(new Tree(id.toString(), idleft, idright));
+    VD.addChild(new Tree("<-", -1, -1));
+    try {
+        VD.addChild(ex);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    VD.addChild(new Tree("END", -1, -1));
+    VD.addChild(new Tree(";", -1, -1));
+    RESULT = VD;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("variable_declaration",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 12: // array_declaration ::= ARR COLON DATATYPE DOUBLECOLON ARRAY LARROW array_values END SEMICOLON 
+            {
+              Tree RESULT =null;
+		int dtleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).left;
+		int dtright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).right;
+		Object dt = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-6)).value;
+		int arleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int arright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Object ar = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int avleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		
+    Tree AD = new Tree("AD", -1, -1);
+    AD.addChild(new Tree("ARR", -1, -1));
+    AD.addChild(new Tree(":", -1, -1));
+    AD.addChild(new Tree(dt.toString(), dtleft, dtright));
+    AD.addChild(new Tree("::", -1, -1));
+    AD.addChild(new Tree(ar.toString(), arleft, arright));
+    AD.addChild(new Tree("<-", -1, -1));
+    try {
+        AD.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    AD.addChild(new Tree("END", -1, -1));
+    AD.addChild(new Tree(";", -1, -1));
+    RESULT = AD;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("array_declaration",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 13: // array_values ::= LBRACKET expression_list RBRACKET 
+            {
+              Tree RESULT =null;
+		int exlleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int exlright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		Tree exl = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		
+    Tree AV = new Tree("AV", -1, -1);
+    AV.addChild(new Tree("[", -1, -1));
+    try {
+        AV.addChild(exl);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    AV.addChild(new Tree("]", -1, -1));
+    RESULT = AV;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("array_values",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 14: // array_values ::= ARRAY 
+            {
+              Tree RESULT =null;
+		int arleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int arright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object ar = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree AV = new Tree("AV", -1, -1);
+    AV.addChild(new Tree(ar.toString(), arleft, arright));
+    RESULT = AV;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("array_values",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 15: // expression_list ::= expression_list COMMA expression 
+            {
+              Tree RESULT =null;
+		int exlleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int exlright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Tree exl = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int exleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int exright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree ex = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree EXL = new Tree("EXL", -1, -1);
+    try {
+        EXL.addChild(exl);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    EXL.addChild(new Tree(",", -1, -1));
+    try {
+        EXL.addChild(ex);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = EXL;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression_list",9, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 16: // expression_list ::= expression 
+            {
+              Tree RESULT =null;
+		int exleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int exright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree ex = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree EXL = new Tree("EXL", -1, -1);
+    try {
+        EXL.addChild(ex);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = EXL;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression_list",9, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 17: // expression_statement ::= function_call 
+            {
+              Tree RESULT =null;
+		int fcleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int fcright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree fc = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree EXS = new Tree("EXS", -1, -1);
+    try {
+        EXS.addChild(fc);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = EXS;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression_statement",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 18: // function_call ::= ESTFUNC LPAREN array_values RPAREN 
+            {
+              Tree RESULT =null;
+		int efleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
+		int efright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
+		Object ef = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
+		int avleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		
+    Tree FC = new Tree("FC", -1, -1);
+    FC.addChild(new Tree(ef.toString(), efleft, efright));
+    FC.addChild(new Tree("(", -1, -1));
+    try {
+        FC.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    FC.addChild(new Tree(")", -1, -1));
+    RESULT = FC;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("function_call",10, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 19: // function_call ::= ARITFUNC LPAREN expression COMMA expression RPAREN 
+            {
+              Tree RESULT =null;
+		int afleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).left;
+		int afright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).right;
+		Object af = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value;
+		int ex1left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
+		int ex1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
+		Tree ex1 = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
+		int ex2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int ex2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		Tree ex2 = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		
+    Tree FC = new Tree("FC", -1, -1);
+    FC.addChild(new Tree(af.toString(), afleft, afright));
+    FC.addChild(new Tree("(", -1, -1));
+    try {
+        FC.addChild(ex1);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    FC.addChild(new Tree(",", -1, -1));
+    try {
+        FC.addChild(ex2);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    FC.addChild(new Tree(")", -1, -1));
+    RESULT = FC;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("function_call",10, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 20: // console_statement ::= CONSOLE DOUBLECOLON print_statement 
+            {
+              Tree RESULT =null;
+		int psleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int psright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree ps = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree CS = new Tree("CS", -1, -1);
+    CS.addChild(new Tree("CONSOLE", -1, -1));
+    CS.addChild(new Tree("::", -1, -1));
+    try {
+        CS.addChild(ps);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = CS;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("console_statement",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 21: // print_statement ::= PRINT EQUAL expression_list END SEMICOLON 
+            {
+              Tree RESULT =null;
+		int exlleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int exlright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Tree exl = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		
+    Tree PS = new Tree("PS", -1, -1);
+    PS.addChild(new Tree("PRINT", -1, -1));
+    PS.addChild(new Tree("=", -1, -1));
+    try {
+        PS.addChild(exl);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    PS.addChild(new Tree("END", -1, -1));
+    PS.addChild(new Tree(";", -1, -1));
+    RESULT = PS;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("print_statement",18, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 22: // print_statement ::= COLUMN EQUAL expression_char RARROW array_values END SEMICOLON 
+            {
+              Tree RESULT =null;
+		int excleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int excright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Tree exc = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int avleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		
+    Tree PS = new Tree("PS", -1, -1);
+    PS.addChild(new Tree("COLUMN", -1, -1));
+    PS.addChild(new Tree("=", -1, -1));
+    try {
+        PS.addChild(exc);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    PS.addChild(new Tree("->", -1, -1));
+    try {
+        PS.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    PS.addChild(new Tree("END", -1, -1));
+    PS.addChild(new Tree(";", -1, -1));
+    RESULT = PS;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("print_statement",18, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 23: // graph_statement ::= GRAPHTYPE LPAREN graph_parameters RPAREN END SEMICOLON 
+            {
+              Tree RESULT =null;
+		int gtleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).left;
+		int gtright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).right;
+		Object gt = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value;
+		int gpleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
+		int gpright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
+		Tree gp = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
+		
+    Tree GS = new Tree("GS", -1, -1);
+    GS.addChild(new Tree(gt.toString(), gtleft, gtright));
+    GS.addChild(new Tree("(", -1, -1));
+    try {
+        GS.addChild(gp);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    GS.addChild(new Tree(")", -1, -1));
+    GS.addChild(new Tree("END", -1, -1));
+    GS.addChild(new Tree(";", -1, -1));
+    RESULT = GS;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("graph_statement",5, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 24: // graph_parameters ::= parameter_list EXEC GRAPHTYPE END SEMICOLON 
+            {
+              Tree RESULT =null;
+		int plleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int plright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Tree pl = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int gtleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int gtright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Object gt = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		
+    Tree GP = new Tree("GP", -1, -1);
+    try {
+        GP.addChild(pl);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    GP.addChild(new Tree("EXEC", -1, -1));
+    GP.addChild(new Tree(gt.toString(), gtleft, gtright));
+    GP.addChild(new Tree("END", -1, -1));
+    GP.addChild(new Tree(";", -1, -1));
+    RESULT = GP;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("graph_parameters",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 25: // graph_parameters ::= error RPAREN END SEMICOLON 
+            {
+              Tree RESULT =null;
+		
+     RESULT= new Tree("ERR", -1, -1);
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("graph_parameters",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 26: // parameter_list ::= parameter_list parameter 
+            {
+              Tree RESULT =null;
+		int plleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int plright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		Tree pl = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		int pleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int pright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree p = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree PL = new Tree("PL", -1, -1);
+    try {
+        PL.addChild(pl);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    try {
+        PL.addChild(p);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = PL;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter_list",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 27: // parameter_list ::= parameter 
+            {
+              Tree RESULT =null;
+		int pleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int pright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree p = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree PL = new Tree("PL", -1, -1);
+    try {
+        PL.addChild(p);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = PL;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter_list",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 28: // parameter ::= TITLE DOUBLECOLON DATATYPE EQUAL expression_char END SEMICOLON 
+            {
+              Tree RESULT =null;
+		int tleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).left;
+		int tright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).right;
+		Object t = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-6)).value;
+		int dtleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int dtright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Object dt = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int excleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int excright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Tree exc = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		
+    if(dt.toString().equals("DOUBLE")){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree(t.toString(), tleft, tright));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
+    try {
+        P.addChild(exc);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
+    RESULT = P;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 29: // parameter ::= EJES DOUBLECOLON DATATYPE EQUAL array_values END SEMICOLON 
+            {
+              Tree RESULT =null;
+		int ejleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).left;
+		int ejright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).right;
+		Object ej = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-6)).value;
+		int dtleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int dtright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Object dt = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int avleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		
+    if((dt.toString().equals("CHAR[]") && ej.toString().equals("EJEY")) || (dt.toString().equals("DOUBLE") && ej.toString().equals("EJEX"))){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree(ej.toString(), ejleft, ejright));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
+    try {
+        P.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
+    RESULT = P;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 30: // parameter ::= VALUES DOUBLECOLON DATATYPE EQUAL array_values END SEMICOLON 
+            {
+              Tree RESULT =null;
+		int dtleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int dtright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Object dt = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int avleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		
+    if(dt.toString().equals("CHAR[]")){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree("VALUES", -1, -1));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
+    try {
+        P.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
+    RESULT = P;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 31: // parameter ::= LABEL DOUBLECOLON DATATYPE EQUAL array_values END SEMICOLON 
+            {
+              Tree RESULT =null;
+		int lleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).right;
+		Object l = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-6)).value;
+		int dtleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int dtright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Object dt = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int avleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int avright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Tree av = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		
+    if(dt.toString().equals("DOUBLE")){
+        addError(dtleft, dtright, dt.toString());
+        RESULT = new Tree("ERR", -1, -1);
+    }
+    Tree P = new Tree("P", -1, -1);
+    P.addChild(new Tree(l.toString(), lleft, lright));
+    P.addChild(new Tree("::", -1, -1));
+    P.addChild(new Tree(dt.toString(), dtleft, dtright));
+    P.addChild(new Tree("=", -1, -1));
+    try {
+        P.addChild(av);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    P.addChild(new Tree("END", -1, -1));
+    P.addChild(new Tree(";", -1, -1));
+    RESULT = P;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 32: // parameter ::= errors 
+            {
+              Tree RESULT =null;
+		
+    RESULT = new Tree("ERR", -1, -1);
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("parameter",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 33: // expression ::= function_call 
+            {
+              Tree RESULT =null;
+		int fcleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int fcright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Tree fc = (Tree)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree EX = new Tree("EX", -1, -1);
+    try {
+        EX.addChild(fc);
+    } catch (Exception e) {
+        RESULT= new Tree("ERR", -1, -1);
+    }
+    RESULT = EX;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 34: // expression ::= ID 
+            {
+              Tree RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		System.out.println("Soy el ID: "+ "igual");
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("L",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+		
+    Tree EX = new Tree("EX", -1, -1);
+    EX.addChild(new Tree(id.toString(), idleft, idright));
+    RESULT = EX;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 35: // expression ::= NUM 
+            {
+              Tree RESULT =null;
+		int numleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int numright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object num = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree EX = new Tree("EX", -1, -1);
+    EX.addChild(new Tree(num.toString(), numleft, numright));
+    RESULT = EX;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 36: // expression ::= STRING 
+            {
+              Tree RESULT =null;
+		int strleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int strright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object str = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree EX = new Tree("EX", -1, -1);
+    EX.addChild(new Tree(str.toString(), strleft, strright));
+    RESULT = EX;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression",16, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 37: // expression_char ::= ID 
+            {
+              Tree RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree EXC = new Tree("EXC", -1, -1);
+    EXC.addChild(new Tree(id.toString(), idleft, idright));
+    RESULT = EXC;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression_char",17, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 38: // expression_char ::= STRING 
+            {
+              Tree RESULT =null;
+		int strleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int strright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object str = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    Tree EXC = new Tree("EXC", -1, -1);
+    EXC.addChild(new Tree(str.toString(), strleft, strright));
+    RESULT = EXC;
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("expression_char",17, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 39: // errors ::= error error_save 
+            {
+              Tree RESULT =null;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("errors",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 40: // errors ::= error_save 
+            {
+              Tree RESULT =null;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("errors",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 41: // error_save ::= SEMICOLON 
+            {
+              Tree RESULT =null;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("error_save",11, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 42: // error_save ::= END SEMICOLON 
+            {
+              Tree RESULT =null;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("error_save",11, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 43: // error_save ::= ID 
+            {
+              Tree RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object id = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+        System.out.println("Error: ID " + id + " no se encuentra en una estructura válida.");
+        addError(idright, idleft, id.toString());
+
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("error_save",11, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 44: // error_save ::= ARR 
+            {
+              Tree RESULT =null;
+		int arrleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int arrright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object arr = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+        System.out.println("Error: arr " + arr + " no se encuentra en una estructura válida.");
+        addError(arrright, arrleft, arr.toString());
+    
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("error_save",11, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 

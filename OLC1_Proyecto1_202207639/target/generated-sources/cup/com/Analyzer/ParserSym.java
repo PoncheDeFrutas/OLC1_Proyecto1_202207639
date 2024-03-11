@@ -16,7 +16,6 @@ public interface ParserSym {
   public static final int EQUAL = 2;
   public static final int COLUMN = 22;
   public static final int END = 14;
-  public static final int ERROR = 33;
   public static final int CONSOLE = 20;
   public static final int DOUBLECOLON = 10;
   public static final int LPAREN = 3;
@@ -75,8 +74,7 @@ public interface ParserSym {
   "ID",
   "NUM",
   "STRING",
-  "ARRAY",
-  "ERROR"
+  "ARRAY"
   };
 }
 
